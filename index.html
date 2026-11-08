@@ -450,6 +450,13 @@ button{font:inherit; color:inherit; border:0; background:none; cursor:pointer}
 .contact-list svg{width:18px; height:18px; flex:none; margin-top:3px; color:var(--terra-2)}
 .contact-list b{display:block; color:#FBF8F1; font-size:var(--fs-sm); font-weight:600}
 .contact-list span{font-size:var(--fs-xs); color:#A8A395; line-height:1.5}
+.contact-list a.contact-email-link{
+  color:var(--terra-2); text-decoration:underline; font-weight:600;
+  transition:color .2s var(--ease);
+}
+.contact-list a.contact-email-link:hover{color:#FFF}
+.foot-email{display:inline-block; margin-top:var(--s2); font-size:var(--fs-xs); color:var(--terra-2); text-decoration:none}
+.foot-email:hover{color:#FFF; text-decoration:underline}
 
 /* FOOTER */
 .site-foot{background:var(--ink); color:#8F8A7C; border-top:1px solid rgba(255,255,255,.09); padding-block:var(--s7) 110px}
@@ -654,8 +661,40 @@ button{font:inherit; color:inherit; border:0; background:none; cursor:pointer}
 .toast svg{width:16px; height:16px; flex:none; color:var(--terra-2)}
 
 /* ============================================================
-   RIGHT-EDGE FLOATING THEME SELECTOR ("POPPING OUT OF THE RIGHT")
+   THEME SELECTORS (NAV + RIGHT-EDGE DOCK)
    ============================================================ */
+.nav-actions{
+  display:flex;
+  align-items:center;
+  gap:var(--s3);
+}
+.nav-theme-wrap{
+  position:relative;
+}
+.btn-nav-theme{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  padding:var(--s2) var(--s4);
+  background:var(--paper);
+  color:var(--ink);
+  border:1.5px solid var(--line-2);
+  border-radius:var(--radius-pill);
+  font-size:var(--fs-xs);
+  font-weight:600;
+  cursor:pointer;
+  box-shadow:var(--shadow-sm);
+  transition:border-color .2s var(--ease), transform .2s var(--ease), background-color .2s var(--ease);
+}
+.btn-nav-theme:hover, .btn-nav-theme:focus-visible{
+  border-color:var(--pine);
+  transform:translateY(-1px);
+}
+.btn-nav-theme svg{width:15px; height:15px; color:var(--terra)}
+@media (min-width:860px){
+  .btn-nav-theme{padding:var(--s3) var(--s4); font-size:var(--fs-sm)}
+}
+
 .theme-dock{
   position:fixed;
   top:140px;
@@ -693,8 +732,6 @@ button{font:inherit; color:inherit; border:0; background:none; cursor:pointer}
 
 .theme-dropdown{
   position:absolute;
-  top:0;
-  right:calc(100% + 10px);
   width:230px;
   background:var(--paper);
   border:1.5px solid var(--line-2);
@@ -706,9 +743,18 @@ button{font:inherit; color:inherit; border:0; background:none; cursor:pointer}
   gap:4px;
   pointer-events:auto;
   animation:themePop .2s var(--ease);
+  z-index:100;
+}
+.theme-dock .theme-dropdown{
+  top:0;
+  right:calc(100% + 10px);
+}
+.nav-theme-wrap .theme-dropdown{
+  top:calc(100% + 8px);
+  right:0;
 }
 .theme-dropdown.open{display:flex}
-@keyframes themePop{from{opacity:0; transform:translateX(8px) scale(.96)} to{opacity:1; transform:none}}
+@keyframes themePop{from{opacity:0; transform:translateY(-6px) scale(.98)} to{opacity:1; transform:none}}
 
 .theme-opt{
   display:flex;
@@ -886,10 +932,40 @@ button{font:inherit; color:inherit; border:0; background:none; cursor:pointer}
         <a href="#work">Work</a>
         <a href="#contact">Contact</a>
       </div>
-      <a class="btn btn-primary" href="#contact">
-        Start a project
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-      </a>
+      <div class="nav-actions">
+        <div class="nav-theme-wrap">
+          <button class="btn-nav-theme" id="navThemeTrigger" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Choose site color theme">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+            <span>Theme</span>
+          </button>
+          <div class="theme-dropdown" id="navThemeDropdown" role="menu" aria-label="Site Theme Selector (Header)">
+            <button class="theme-opt active" type="button" role="menuitem" data-set-theme="light">
+              <span class="theme-swatch swatch-light" aria-hidden="true"></span>
+              <span>Editorial Light</span>
+              <svg class="theme-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            </button>
+            <button class="theme-opt" type="button" role="menuitem" data-set-theme="dark">
+              <span class="theme-swatch swatch-dark" aria-hidden="true"></span>
+              <span>Midnight Dark</span>
+              <svg class="theme-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            </button>
+            <button class="theme-opt" type="button" role="menuitem" data-set-theme="sepia">
+              <span class="theme-swatch swatch-sepia" aria-hidden="true"></span>
+              <span>Warm Sepia</span>
+              <svg class="theme-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            </button>
+            <button class="theme-opt" type="button" role="menuitem" data-set-theme="slate">
+              <span class="theme-swatch swatch-slate" aria-hidden="true"></span>
+              <span>Slate Modern</span>
+              <svg class="theme-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            </button>
+          </div>
+        </div>
+        <a class="btn btn-primary" href="#contact">
+          Start a project
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
     </nav>
   </div>
 </header>
@@ -1239,18 +1315,18 @@ button{font:inherit; color:inherit; border:0; background:none; cursor:pointer}
           <h2 id="contact-title" class="reveal d1">Let's build something worth clicking through.</h2>
           <p class="reveal d2">Have a project in mind, or a page that isn't converting the way it should? Send over the brief — or just the URL — and I'll come back with a plan: what I'd change first, what it would take, and what it would cost.</p>
           <div class="contact-cta reveal d3">
-            <a class="btn btn-terra" href="#work">
-              Review the work
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            <a class="btn btn-terra" href="mailto:Krisgideonx@gmail.com">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16v12H4z"/><path d="M4 7l8 6 8-6"/></svg>
+              Email Krisgideonx@gmail.com
             </a>
-            <a class="btn btn-ghost" href="#top">Back to top</a>
+            <a class="btn btn-ghost" href="#work">Review the work</a>
           </div>
         </div>
 
         <ul class="contact-list">
           <li class="reveal d1">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16v12H4z"/><path d="M4 7l8 6 8-6"/></svg>
-            <span><b>New projects</b><span>Homepages, landing pages, redesigns and full site builds.</span></span>
+            <span><b>Direct Email</b><span><a class="contact-email-link" href="mailto:Krisgideonx@gmail.com">Krisgideonx@gmail.com</a> — send a brief or ask about project timelines.</span></span>
           </li>
           <li class="reveal d2">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19V5M4 19h16"/><path d="M8 15l3.5-4 3 2.5L20 7"/></svg>
@@ -1278,16 +1354,17 @@ button{font:inherit; color:inherit; border:0; background:none; cursor:pointer}
           Kris Gideon
         </div>
         <p class="foot-note">Web design and front-end build. Warm, considered, accessible — and tested at every breakpoint.</p>
+        <a class="foot-email" href="mailto:Krisgideonx@gmail.com">Krisgideonx@gmail.com</a>
       </div>
       <nav class="foot-list" aria-label="Footer">
         <a href="#about">About</a>
         <a href="#work">Work</a>
-        <a href="#contact">Contact</a>
+        <a href="mailto:Krisgideonx@gmail.com">Contact (Krisgideonx@gmail.com)</a>
         <a href="#top">Back to top</a>
       </nav>
     </div>
     <div class="foot-bottom">
-      <span>&copy; <span id="year">2026</span> Kris Gideon. All rights reserved.</span>
+      <span>&copy; <span id="year">2026</span> Kris Gideon &bull; <a href="mailto:Krisgideonx@gmail.com" style="color:inherit; text-decoration:underline">Krisgideonx@gmail.com</a>. All rights reserved.</span>
       <span>Built by hand — semantic HTML, no frameworks.</span>
     </div>
   </div>
@@ -1548,6 +1625,8 @@ button{font:inherit; color:inherit; border:0; background:none; cursor:pointer}
   var THEME_KEY = "kg-portfolio-theme-v1";
   var themeTrigger = document.getElementById("themeTrigger");
   var themeDropdown = document.getElementById("themeDropdown");
+  var navThemeTrigger = document.getElementById("navThemeTrigger");
+  var navThemeDropdown = document.getElementById("navThemeDropdown");
   var metaThemeColor = document.getElementById("metaThemeColor");
   var themeColors = {
     light: "#FAF6EF",
@@ -1562,52 +1641,65 @@ button{font:inherit; color:inherit; border:0; background:none; cursor:pointer}
     if (metaThemeColor) { metaThemeColor.setAttribute("content", themeColors[theme]); }
     try { localStorage.setItem(THEME_KEY, theme); } catch (e) {}
 
-    if (themeDropdown) {
-      var opts = themeDropdown.querySelectorAll("[data-set-theme]");
-      opts.forEach(function (opt) {
-        if (opt.getAttribute("data-set-theme") === theme) {
-          opt.classList.add("active");
-          opt.setAttribute("aria-selected", "true");
-        } else {
-          opt.classList.remove("active");
-          opt.removeAttribute("aria-selected");
-        }
-      });
-    }
+    var allOpts = document.querySelectorAll("[data-set-theme]");
+    allOpts.forEach(function (opt) {
+      if (opt.getAttribute("data-set-theme") === theme) {
+        opt.classList.add("active");
+        opt.setAttribute("aria-selected", "true");
+      } else {
+        opt.classList.remove("active");
+        opt.removeAttribute("aria-selected");
+      }
+    });
   }
 
-  if (themeTrigger && themeDropdown) {
-    themeTrigger.addEventListener("click", function (e) {
+  function closeAllThemeDropdowns() {
+    if (themeDropdown) { themeDropdown.classList.remove("open"); }
+    if (themeTrigger) { themeTrigger.setAttribute("aria-expanded", "false"); }
+    if (navThemeDropdown) { navThemeDropdown.classList.remove("open"); }
+    if (navThemeTrigger) { navThemeTrigger.setAttribute("aria-expanded", "false"); }
+  }
+
+  function setupThemeDropdownPair(trigger, dropdown) {
+    if (!trigger || !dropdown) { return; }
+    trigger.addEventListener("click", function (e) {
       e.stopPropagation();
-      var isOpen = themeDropdown.classList.toggle("open");
-      themeTrigger.setAttribute("aria-expanded", isOpen ? "true" : "false");
+      var willOpen = !dropdown.classList.contains("open");
+      closeAllThemeDropdowns();
+      if (willOpen) {
+        dropdown.classList.add("open");
+        trigger.setAttribute("aria-expanded", "true");
+      }
     });
 
-    themeDropdown.addEventListener("click", function (e) {
+    dropdown.addEventListener("click", function (e) {
       var btn = e.target.closest ? e.target.closest("[data-set-theme]") : null;
       if (!btn) { return; }
       var chosen = btn.getAttribute("data-set-theme");
       applyTheme(chosen);
-      themeDropdown.classList.remove("open");
-      themeTrigger.setAttribute("aria-expanded", "false");
+      closeAllThemeDropdowns();
       showToast("Theme switched to " + btn.textContent.trim());
     });
-
-    document.addEventListener("click", function (e) {
-      if (!themeDropdown.contains(e.target) && !themeTrigger.contains(e.target)) {
-        themeDropdown.classList.remove("open");
-        themeTrigger.setAttribute("aria-expanded", "false");
-      }
-    });
-
-    document.addEventListener("keydown", function (e) {
-      if (e.key === "Escape" && themeDropdown.classList.contains("open")) {
-        themeDropdown.classList.remove("open");
-        themeTrigger.setAttribute("aria-expanded", "false");
-        themeTrigger.focus();
-      }
-    });
   }
+
+  setupThemeDropdownPair(themeTrigger, themeDropdown);
+  setupThemeDropdownPair(navThemeTrigger, navThemeDropdown);
+
+  document.addEventListener("click", function (e) {
+    var inTheme = (themeDropdown && themeDropdown.contains(e.target)) ||
+                  (themeTrigger && themeTrigger.contains(e.target)) ||
+                  (navThemeDropdown && navThemeDropdown.contains(e.target)) ||
+                  (navThemeTrigger && navThemeTrigger.contains(e.target));
+    if (!inTheme) {
+      closeAllThemeDropdowns();
+    }
+  });
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") {
+      closeAllThemeDropdowns();
+    }
+  });
 
   var currentSavedTheme = "light";
   try { currentSavedTheme = localStorage.getItem(THEME_KEY) || "light"; } catch (e) {}
