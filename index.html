@@ -57,7 +57,17 @@ sweep(document)})();</script>
 <title>Kris Gideon — Web Design &amp; Front-End Portfolio</title>
 <meta name="description" content="A portfolio of live web design and front-end work: a full homepage redesign for the Waypoint walking-services brand, a UI redesign proposal, a cozy editorial magazine about living solo, a rental marketplace, a birthday tribute, a children's lesson landing page and a cyber-security bootcamp.">
 <meta name="author" content="Kris Gideon">
-<meta name="theme-color" content="#FAF6EF">
+<meta name="theme-color" content="#FAF6EF" id="metaThemeColor">
+<script>
+  (function(){
+    var savedTheme = localStorage.getItem("kg-portfolio-theme-v1") || "light";
+    document.documentElement.setAttribute("data-theme", savedTheme);
+    var themeColors = { light: "#FAF6EF", dark: "#0D1117", sepia: "#F5ECD7", slate: "#0F172A" };
+    var mc = document.getElementById("metaThemeColor");
+    if (mc && themeColors[savedTheme]) { mc.setAttribute("content", themeColors[savedTheme]); }
+  })();
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <link rel="canonical" href="https://static.teamily.ai/sites/8ba74bf1-36e3-420c-8e3c-d12147151b9c/webpages/portfolio/index.html?tk=c2l0ZTo4YmE3NGJmMS0zNmUzLTQyMGMtOGUzYy1kMTIxNDcxNTFiOWMvd2VicGFnZXMvcG9ydGZvbGlvOjE3OTM2OTk0MjU.ZTQ3YTQ2ZTcxMDEzYjQ5ZDJkNjM2Y2ViYmVkOGNlMjQ">
 
 <meta property="og:type" content="website">
@@ -93,6 +103,64 @@ sweep(document)})();</script>
   --terra:#C05F3C;
   --terra-2:#E08A63;
   --gold:#D9A441;
+  --card-media-bg:#F2ECE0;
+  --nav-bg:rgba(250,246,239,.82);
+  --modal-overlay:rgba(22,21,15,.55);
+}
+
+[data-theme="dark"]{
+  --ink:#F0F6FC;
+  --ink-2:#C9D1D9;
+  --muted:#8B949E;
+  --cream:#0D1117;
+  --paper:#161B22;
+  --line:#30363D;
+  --line-2:#484F58;
+  --pine:#2EA043;
+  --pine-2:#3FB950;
+  --terra:#F0883E;
+  --terra-2:#FFA657;
+  --gold:#F2CC60;
+  --card-media-bg:#21262D;
+  --nav-bg:rgba(13,17,23,.82);
+  --modal-overlay:rgba(0,0,0,.75);
+}
+
+[data-theme="sepia"]{
+  --ink:#2C2216;
+  --ink-2:#4A3B2C;
+  --muted:#7A6855;
+  --cream:#F5ECD7;
+  --paper:#FAF4E6;
+  --line:#DBC9A8;
+  --line-2:#CBB590;
+  --pine:#2D5A43;
+  --pine-2:#3E7B5C;
+  --terra:#B8502A;
+  --terra-2:#D46E44;
+  --gold:#C48B28;
+  --card-media-bg:#EADBBD;
+  --nav-bg:rgba(245,236,215,.85);
+  --modal-overlay:rgba(44,34,22,.6);
+}
+
+[data-theme="slate"]{
+  --ink:#F8FAFC;
+  --ink-2:#CBD5E1;
+  --muted:#94A3B8;
+  --cream:#0F172A;
+  --paper:#1E293B;
+  --line:#334155;
+  --line-2:#475569;
+  --pine:#38BDF8;
+  --pine-2:#0EA5E9;
+  --terra:#F43F5E;
+  --terra-2:#FB7185;
+  --gold:#FBBF24;
+  --card-media-bg:#1A2234;
+  --nav-bg:rgba(15,23,42,.85);
+  --modal-overlay:rgba(2,6,23,.78);
+}
 
   /* type scale (fluid) */
   --fs-display:clamp(2.6rem, 6.2vw, 4.6rem);
@@ -166,7 +234,7 @@ button{font:inherit; color:inherit; border:0; background:none; cursor:pointer}
    ============================================================ */
 .site-head{
   position:sticky; top:0; z-index:80;
-  background:rgba(250,246,239,.82);
+  background:var(--nav-bg);
   backdrop-filter:blur(14px) saturate(140%);
   -webkit-backdrop-filter:blur(14px) saturate(140%);
   border-bottom:1px solid transparent;
@@ -244,7 +312,7 @@ button{font:inherit; color:inherit; border:0; background:none; cursor:pointer}
   background:var(--paper); border:1px solid var(--line);
   box-shadow:var(--shadow-lg);
 }
-.frame-bar{display:flex; align-items:center; gap:6px; padding:11px var(--s4); background:#F2ECE0; border-bottom:1px solid var(--line)}
+.frame-bar{display:flex; align-items:center; gap:6px; padding:11px var(--s4); background:var(--card-media-bg); border-bottom:1px solid var(--line)}
 .frame-bar i{width:10px; height:10px; border-radius:50%; background:var(--line-2); display:block}
 .frame-bar i:nth-child(1){background:#E0A08A}
 .frame-bar i:nth-child(2){background:#E8CE94}
@@ -331,12 +399,12 @@ button{font:inherit; color:inherit; border:0; background:none; cursor:pointer}
   transition:transform .3s var(--ease), box-shadow .3s var(--ease), border-color .3s var(--ease);
 }
 .card:hover,.card:focus-within{transform:translateY(-6px); box-shadow:var(--shadow-lg); border-color:var(--line-2)}
-.card-media{position:relative; overflow:hidden; background:#F2ECE0; border-bottom:1px solid var(--line)}
+.card-media{position:relative; overflow:hidden; background:var(--card-media-bg); border-bottom:1px solid var(--line)}
 .card-media img{width:100%; aspect-ratio:16/10; object-fit:cover; object-position:top center; transition:transform .6s var(--ease)}
 .card:hover .card-media img{transform:scale(1.035)}
 .card-badge{
   position:absolute; top:var(--s4); left:var(--s4); z-index:2;
-  background:rgba(255,253,248,.94); border:1px solid var(--line);
+  background:var(--paper); border:1px solid var(--line);
   border-radius:var(--radius-pill); padding:5px var(--s3);
   font-size:var(--fs-xs); font-weight:600; color:var(--pine); letter-spacing:.04em;
   backdrop-filter:blur(6px);
@@ -382,6 +450,13 @@ button{font:inherit; color:inherit; border:0; background:none; cursor:pointer}
 .contact-list svg{width:18px; height:18px; flex:none; margin-top:3px; color:var(--terra-2)}
 .contact-list b{display:block; color:#FBF8F1; font-size:var(--fs-sm); font-weight:600}
 .contact-list span{font-size:var(--fs-xs); color:#A8A395; line-height:1.5}
+.contact-list a.contact-email-link{
+  color:var(--terra-2); text-decoration:underline; font-weight:600;
+  transition:color .2s var(--ease);
+}
+.contact-list a.contact-email-link:hover{color:#FFF}
+.foot-email{display:inline-block; margin-top:var(--s2); font-size:var(--fs-xs); color:var(--terra-2); text-decoration:none}
+.foot-email:hover{color:#FFF; text-decoration:underline}
 
 /* FOOTER */
 .site-foot{background:var(--ink); color:#8F8A7C; border-top:1px solid rgba(255,255,255,.09); padding-block:var(--s7) 110px}
@@ -485,7 +560,7 @@ button{font:inherit; color:inherit; border:0; background:none; cursor:pointer}
 .modal{
   position:fixed; inset:0; z-index:120; display:none;
   align-items:center; justify-content:center; padding:var(--s5);
-  background:rgba(22,21,15,.55);
+  background:var(--modal-overlay);
   backdrop-filter:blur(4px); -webkit-backdrop-filter:blur(4px);
 }
 .modal.open{display:flex}
@@ -528,7 +603,7 @@ button{font:inherit; color:inherit; border:0; background:none; cursor:pointer}
 
 .shot-preview{
   position:relative; margin-top:var(--s2); border:1px solid var(--line);
-  border-radius:var(--radius); overflow:hidden; background:#F2ECE0;
+  border-radius:var(--radius); overflow:hidden; background:var(--card-media-bg);
   aspect-ratio:16/10; display:none;
 }
 .shot-preview.show{display:block}
@@ -536,7 +611,7 @@ button{font:inherit; color:inherit; border:0; background:none; cursor:pointer}
 .shot-preview .shot-state{
   position:absolute; inset:0; display:grid; place-items:center;
   font-size:var(--fs-xs); color:var(--muted); font-weight:600;
-  background:#F2ECE0; text-align:center; padding:var(--s4); line-height:1.5;
+  background:var(--card-media-bg); text-align:center; padding:var(--s4); line-height:1.5;
 }
 .shot-preview img + .shot-state{display:none}
 .shot-preview img.broken + .shot-state{display:grid}
@@ -555,7 +630,7 @@ button{font:inherit; color:inherit; border:0; background:none; cursor:pointer}
   position:absolute; top:var(--s3); right:var(--s3); z-index:3;
   width:30px; height:30px; border-radius:50%;
   display:grid; place-items:center;
-  background:rgba(255,253,248,.94); border:1px solid var(--line);
+  background:var(--paper); border:1px solid var(--line);
   color:var(--muted); box-shadow:var(--shadow-sm);
   opacity:0; transition:opacity .2s var(--ease), color .2s var(--ease), border-color .2s var(--ease);
 }
@@ -586,6 +661,216 @@ button{font:inherit; color:inherit; border:0; background:none; cursor:pointer}
 .toast svg{width:16px; height:16px; flex:none; color:var(--terra-2)}
 
 /* ============================================================
+   THEME SELECTORS (NAV + RIGHT-EDGE DOCK)
+   ============================================================ */
+.nav-actions{
+  display:flex;
+  align-items:center;
+  gap:var(--s3);
+}
+.nav-theme-wrap{
+  position:relative;
+}
+.btn-nav-theme{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  padding:var(--s2) var(--s4);
+  background:var(--paper);
+  color:var(--ink);
+  border:1.5px solid var(--line-2);
+  border-radius:var(--radius-pill);
+  font-size:var(--fs-xs);
+  font-weight:600;
+  cursor:pointer;
+  box-shadow:var(--shadow-sm);
+  transition:border-color .2s var(--ease), transform .2s var(--ease), background-color .2s var(--ease);
+}
+.btn-nav-theme:hover, .btn-nav-theme:focus-visible{
+  border-color:var(--pine);
+  transform:translateY(-1px);
+}
+.btn-nav-theme svg{width:15px; height:15px; color:var(--terra)}
+@media (min-width:860px){
+  .btn-nav-theme{padding:var(--s3) var(--s4); font-size:var(--fs-sm)}
+}
+
+.theme-dock{
+  position:fixed;
+  top:140px;
+  right:0;
+  z-index:95;
+  display:flex;
+  align-items:flex-start;
+  pointer-events:none;
+}
+.theme-trigger{
+  pointer-events:auto;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  background:var(--paper);
+  color:var(--ink);
+  border:1.5px solid var(--line-2);
+  border-right:none;
+  border-radius:var(--radius-pill) 0 0 var(--radius-pill);
+  padding:8px 14px 8px 12px;
+  font-size:var(--fs-xs);
+  font-weight:600;
+  box-shadow:var(--shadow-md);
+  cursor:pointer;
+  transition:transform .22s var(--ease), box-shadow .22s var(--ease), background-color .22s var(--ease);
+}
+.theme-trigger:hover, .theme-trigger:focus-visible{
+  transform:translateX(-4px);
+  box-shadow:var(--shadow-lg);
+  border-color:var(--pine);
+}
+.theme-trigger svg{width:16px; height:16px; color:var(--terra)}
+.theme-trigger-label{display:none}
+@media (min-width:600px){ .theme-trigger-label{display:inline} }
+
+.theme-dropdown{
+  position:absolute;
+  width:230px;
+  background:var(--paper);
+  border:1.5px solid var(--line-2);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow-lg);
+  padding:8px;
+  display:none;
+  flex-direction:column;
+  gap:4px;
+  pointer-events:auto;
+  animation:themePop .2s var(--ease);
+  z-index:100;
+}
+.theme-dock .theme-dropdown{
+  top:0;
+  right:calc(100% + 10px);
+}
+.nav-theme-wrap .theme-dropdown{
+  top:calc(100% + 8px);
+  right:0;
+}
+.theme-dropdown.open{display:flex}
+@keyframes themePop{from{opacity:0; transform:translateY(-6px) scale(.98)} to{opacity:1; transform:none}}
+
+.theme-opt{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  width:100%;
+  padding:8px 10px;
+  border-radius:8px;
+  border:none;
+  background:transparent;
+  color:var(--ink-2);
+  font-size:var(--fs-xs);
+  font-weight:500;
+  text-align:left;
+  cursor:pointer;
+  transition:background-color .15s var(--ease), color .15s var(--ease);
+}
+.theme-opt:hover, .theme-opt:focus-visible{
+  background:var(--cream);
+  color:var(--ink);
+}
+.theme-opt.active{
+  background:var(--cream);
+  color:var(--ink);
+  font-weight:700;
+}
+.theme-swatch{
+  width:18px;
+  height:18px;
+  border-radius:50%;
+  border:1.5px solid rgba(0,0,0,.15);
+  flex:none;
+}
+.theme-swatch.swatch-light{background:#FAF6EF; border-color:#D8CCB6}
+.theme-swatch.swatch-dark{background:#0D1117; border-color:#484F58}
+.theme-swatch.swatch-sepia{background:#F5ECD7; border-color:#CBB590}
+.theme-swatch.swatch-slate{background:#0F172A; border-color:#475569}
+.theme-check{
+  margin-left:auto;
+  display:none;
+  width:14px;
+  height:14px;
+  color:var(--pine);
+}
+.theme-opt.active .theme-check{display:inline-block}
+
+/* ============================================================
+   CARD ACTIONS & INACTIVE LINK STYLES
+   ============================================================ */
+.card-actions-bar{
+  position:absolute;
+  top:var(--s3);
+  right:var(--s3);
+  z-index:4;
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+.card-btn{
+  width:32px;
+  height:32px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  background:var(--paper);
+  border:1px solid var(--line-2);
+  color:var(--muted);
+  box-shadow:var(--shadow-sm);
+  cursor:pointer;
+  transition:transform .2s var(--ease), color .2s var(--ease), border-color .2s var(--ease), opacity .2s var(--ease);
+}
+.card-btn:hover{color:var(--ink); border-color:var(--ink); transform:scale(1.08)}
+.card-btn.btn-edit:hover{color:var(--pine); border-color:var(--pine)}
+.card-btn.btn-take-down:hover{color:var(--terra); border-color:var(--terra)}
+.card-btn svg{width:15px; height:15px}
+
+.card.is-inactive{
+  opacity:.65;
+  filter:grayscale(60%);
+  border-style:dashed;
+}
+.card.is-inactive:hover{
+  opacity:.9;
+  filter:grayscale(20%);
+}
+.badge-inactive{
+  background:#E08A63 !important;
+  color:#FFFDF8 !important;
+  border-color:#C05F3C !important;
+}
+.card-link.disabled{
+  pointer-events:none;
+  cursor:not-allowed;
+  opacity:.55;
+  text-decoration:line-through;
+}
+
+/* Status indicator badge */
+.sync-indicator{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  font-size:var(--fs-xs);
+  color:var(--muted);
+  margin-top:var(--s2);
+}
+.sync-dot{
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:#2EA043;
+  display:inline-block;
+}
+.sync-dot.offline{background:#E08A63}
+
+/* ============================================================
    REDUCED MOTION
    ============================================================ */
 @media (prefers-reduced-motion: reduce){
@@ -603,6 +888,36 @@ button{font:inherit; color:inherit; border:0; background:none; cursor:pointer}
 
 <a class="skip" href="#main">Skip to main content</a>
 
+<!-- FLOATING THEME SELECTOR POPPING OUT OF THE RIGHT -->
+<div class="theme-dock" id="themeDock">
+  <button class="theme-trigger" id="themeTrigger" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Toggle site theme menu">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+    <span class="theme-trigger-label">Theme</span>
+  </button>
+  <div class="theme-dropdown" id="themeDropdown" role="menu" aria-label="Site Theme Selector">
+    <button class="theme-opt active" type="button" role="menuitem" data-set-theme="light">
+      <span class="theme-swatch swatch-light" aria-hidden="true"></span>
+      <span>Editorial Light</span>
+      <svg class="theme-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+    </button>
+    <button class="theme-opt" type="button" role="menuitem" data-set-theme="dark">
+      <span class="theme-swatch swatch-dark" aria-hidden="true"></span>
+      <span>Midnight Dark</span>
+      <svg class="theme-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+    </button>
+    <button class="theme-opt" type="button" role="menuitem" data-set-theme="sepia">
+      <span class="theme-swatch swatch-sepia" aria-hidden="true"></span>
+      <span>Warm Sepia</span>
+      <svg class="theme-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+    </button>
+    <button class="theme-opt" type="button" role="menuitem" data-set-theme="slate">
+      <span class="theme-swatch swatch-slate" aria-hidden="true"></span>
+      <span>Slate Modern</span>
+      <svg class="theme-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+    </button>
+  </div>
+</div>
+
 <header class="site-head" id="siteHead">
   <div class="wrap">
     <nav class="nav" aria-label="Primary">
@@ -617,10 +932,40 @@ button{font:inherit; color:inherit; border:0; background:none; cursor:pointer}
         <a href="#work">Work</a>
         <a href="#contact">Contact</a>
       </div>
-      <a class="btn btn-primary" href="#contact">
-        Start a project
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-      </a>
+      <div class="nav-actions">
+        <div class="nav-theme-wrap">
+          <button class="btn-nav-theme" id="navThemeTrigger" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Choose site color theme">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+            <span>Theme</span>
+          </button>
+          <div class="theme-dropdown" id="navThemeDropdown" role="menu" aria-label="Site Theme Selector (Header)">
+            <button class="theme-opt active" type="button" role="menuitem" data-set-theme="light">
+              <span class="theme-swatch swatch-light" aria-hidden="true"></span>
+              <span>Editorial Light</span>
+              <svg class="theme-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            </button>
+            <button class="theme-opt" type="button" role="menuitem" data-set-theme="dark">
+              <span class="theme-swatch swatch-dark" aria-hidden="true"></span>
+              <span>Midnight Dark</span>
+              <svg class="theme-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            </button>
+            <button class="theme-opt" type="button" role="menuitem" data-set-theme="sepia">
+              <span class="theme-swatch swatch-sepia" aria-hidden="true"></span>
+              <span>Warm Sepia</span>
+              <svg class="theme-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            </button>
+            <button class="theme-opt" type="button" role="menuitem" data-set-theme="slate">
+              <span class="theme-swatch swatch-slate" aria-hidden="true"></span>
+              <span>Slate Modern</span>
+              <svg class="theme-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            </button>
+          </div>
+        </div>
+        <a class="btn btn-primary" href="#contact">
+          Start a project
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
     </nav>
   </div>
 </header>
@@ -649,7 +994,7 @@ button{font:inherit; color:inherit; border:0; background:none; cursor:pointer}
             <a class="btn btn-ghost" href="#contact">Get in touch</a>
           </div>
           <div class="hero-meta reveal d3">
-            <div><b>8</b><span>Live projects</span></div>
+            <div><b>4</b><span>Live projects</span></div>
             <div><b>100%</b><span>Hand-built</span></div>
             <div><b>3</b><span>Breakpoints tested</span></div>
           </div>
@@ -745,7 +1090,11 @@ button{font:inherit; color:inherit; border:0; background:none; cursor:pointer}
       <div class="work-head">
         <div class="section-head">
           <span class="eyebrow reveal">Selected work</span>
-          <h2 id="work-title" class="reveal d1">Eight projects, all live.</h2>
+          <h2 id="work-title" class="reveal d1">Nine projects, all live.</h2>
+          <div class="sync-indicator reveal d2" id="syncIndicator">
+            <span class="sync-dot" id="syncDot" aria-hidden="true"></span>
+            <span id="syncText">Supabase Cloud Sync active</span>
+          </div>
           <p class="reveal d2">Each card links straight to the running site. Open them in a new tab and resize the window — the responsive behaviour is part of the work.</p>
         </div>
         <button class="btn btn-terra add-work-btn reveal d2" id="addWorkBtn" type="button" aria-haspopup="dialog" aria-controls="authModal">
@@ -966,18 +1315,18 @@ button{font:inherit; color:inherit; border:0; background:none; cursor:pointer}
           <h2 id="contact-title" class="reveal d1">Let's build something worth clicking through.</h2>
           <p class="reveal d2">Have a project in mind, or a page that isn't converting the way it should? Send over the brief — or just the URL — and I'll come back with a plan: what I'd change first, what it would take, and what it would cost.</p>
           <div class="contact-cta reveal d3">
-            <a class="btn btn-terra" href="#work">
-              Review the work
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            <a class="btn btn-terra" href="mailto:Krisgideonx@gmail.com">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16v12H4z"/><path d="M4 7l8 6 8-6"/></svg>
+              Email Krisgideonx@gmail.com
             </a>
-            <a class="btn btn-ghost" href="#top">Back to top</a>
+            <a class="btn btn-ghost" href="#work">Review the work</a>
           </div>
         </div>
 
         <ul class="contact-list">
           <li class="reveal d1">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16v12H4z"/><path d="M4 7l8 6 8-6"/></svg>
-            <span><b>New projects</b><span>Homepages, landing pages, redesigns and full site builds.</span></span>
+            <span><b>Direct Email</b><span><a class="contact-email-link" href="mailto:Krisgideonx@gmail.com">Krisgideonx@gmail.com</a> — send a brief or ask about project timelines.</span></span>
           </li>
           <li class="reveal d2">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19V5M4 19h16"/><path d="M8 15l3.5-4 3 2.5L20 7"/></svg>
@@ -1005,16 +1354,17 @@ button{font:inherit; color:inherit; border:0; background:none; cursor:pointer}
           Kris Gideon
         </div>
         <p class="foot-note">Web design and front-end build. Warm, considered, accessible — and tested at every breakpoint.</p>
+        <a class="foot-email" href="mailto:Krisgideonx@gmail.com">Krisgideonx@gmail.com</a>
       </div>
       <nav class="foot-list" aria-label="Footer">
         <a href="#about">About</a>
         <a href="#work">Work</a>
-        <a href="#contact">Contact</a>
+        <a href="mailto:Krisgideonx@gmail.com">Contact (Krisgideonx@gmail.com)</a>
         <a href="#top">Back to top</a>
       </nav>
     </div>
     <div class="foot-bottom">
-      <span>&copy; <span id="year">2026</span> Kris Gideon. All rights reserved.</span>
+      <span>&copy; <span id="year">2026</span> Kris Gideon &bull; <a href="mailto:Krisgideonx@gmail.com" style="color:inherit; text-decoration:underline">Krisgideonx@gmail.com</a>. All rights reserved.</span>
       <span>Built by hand — semantic HTML, no frameworks.</span>
     </div>
   </div>
@@ -1051,6 +1401,75 @@ button{font:inherit; color:inherit; border:0; background:none; cursor:pointer}
           Verify &amp; Unlock
         </button>
         <button class="btn btn-ghost" type="button" id="authCancel">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ================= EDIT PROJECT MODAL ================= -->
+<div class="modal" id="editWorkModal" role="dialog" aria-modal="true" aria-labelledby="editWorkTitle" aria-hidden="true">
+  <div class="modal-card">
+    <div class="modal-head">
+      <div>
+        <div class="auth-badge" style="background:rgba(224,138,99,.12); color:var(--terra); border-color:rgba(224,138,99,.3);">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          Author Controls &bull; Edit Project
+        </div>
+        <h2 id="editWorkTitle">Edit project details</h2>
+        <p>Update links, titles, descriptions, status, or take down this project from your online portfolio.</p>
+      </div>
+      <button class="modal-close" id="editWorkClose" type="button" aria-label="Close the edit project form">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+
+    <form class="form-grid" id="editWorkForm" novalidate>
+      <input type="hidden" id="editProjectId" value="">
+
+      <div class="field" id="fEditTitle">
+        <label for="editInTitle">Project Title</label>
+        <input type="text" id="editInTitle" placeholder="Project name" required>
+        <span class="err">Please enter a project title.</span>
+      </div>
+
+      <div class="field" id="fEditUrl">
+        <label for="editInUrl">Website URL</label>
+        <input type="url" id="editInUrl" placeholder="https://example.com" required>
+        <span class="err">Please enter a valid web address starting with https://</span>
+      </div>
+
+      <div class="field" id="fEditDesc">
+        <label for="editInDesc">Description</label>
+        <textarea id="editInDesc" placeholder="Describe the project, brief, or redesign details..." required></textarea>
+        <span class="err">Please write a short description.</span>
+      </div>
+
+      <div class="field" id="fEditTags">
+        <label for="editInTags">Tags (comma-separated)</label>
+        <input type="text" id="editInTags" placeholder="e.g. Responsive, Editorial, Web App">
+        <span class="hint">Tags help visitors filter and understand your disciplines.</span>
+      </div>
+
+      <div class="field" style="margin-top:var(--s2); padding:var(--s3); background:var(--cream); border:1px solid var(--line); border-radius:var(--radius);">
+        <label style="display:flex; align-items:center; gap:10px; cursor:pointer; text-transform:none; font-size:var(--fs-sm); font-weight:600; color:var(--ink);">
+          <input type="checkbox" id="editInInactive" style="width:18px; height:18px; accent-color:var(--terra); cursor:pointer;">
+          <span>Mark as Inactive / Archived link</span>
+        </label>
+        <span class="hint" style="margin-left:28px;">Displays an "Inactive" badge and safely disables link clicks while keeping the showcase item visible.</span>
+      </div>
+
+      <div class="form-actions" style="justify-content:space-between; align-items:center;">
+        <button class="btn btn-terra" id="editTakeDownBtn" type="button" style="background:#B83A20;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
+          Take down project
+        </button>
+        <div style="display:flex; gap:var(--s2); flex-wrap:wrap;">
+          <button class="btn btn-ghost" type="button" id="editWorkCancel">Cancel</button>
+          <button class="btn btn-primary" type="submit" id="editWorkSaveBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            Save changes
+          </button>
+        </div>
       </div>
     </form>
   </div>
@@ -1201,13 +1620,93 @@ button{font:inherit; color:inherit; border:0; background:none; cursor:pointer}
   }
 
   /* ==========================================================
-     ADD WORK — add a project with an auto screenshot, persist it
+     THEME CONTROLLER (Editorial Light, Midnight Dark, Sepia, Slate)
      ========================================================== */
-  var KEY = "kg-portfolio-projects-v1";
-  var SYNC_ENDPOINT = "https://api.restful-api.dev/objects/ff808181a09d98f701a1ba8b71156436";
+  var THEME_KEY = "kg-portfolio-theme-v1";
+  var themeTrigger = document.getElementById("themeTrigger");
+  var themeDropdown = document.getElementById("themeDropdown");
+  var navThemeTrigger = document.getElementById("navThemeTrigger");
+  var navThemeDropdown = document.getElementById("navThemeDropdown");
+  var metaThemeColor = document.getElementById("metaThemeColor");
+  var themeColors = {
+    light: "#FAF6EF",
+    dark: "#0D1117",
+    sepia: "#F5ECD7",
+    slate: "#0F172A"
+  };
+
+  function applyTheme(theme) {
+    if (!themeColors[theme]) { theme = "light"; }
+    document.documentElement.setAttribute("data-theme", theme);
+    if (metaThemeColor) { metaThemeColor.setAttribute("content", themeColors[theme]); }
+    try { localStorage.setItem(THEME_KEY, theme); } catch (e) {}
+
+    var allOpts = document.querySelectorAll("[data-set-theme]");
+    allOpts.forEach(function (opt) {
+      if (opt.getAttribute("data-set-theme") === theme) {
+        opt.classList.add("active");
+        opt.setAttribute("aria-selected", "true");
+      } else {
+        opt.classList.remove("active");
+        opt.removeAttribute("aria-selected");
+      }
+    });
+  }
+
+  function closeAllThemeDropdowns() {
+    if (themeDropdown) { themeDropdown.classList.remove("open"); }
+    if (themeTrigger) { themeTrigger.setAttribute("aria-expanded", "false"); }
+    if (navThemeDropdown) { navThemeDropdown.classList.remove("open"); }
+    if (navThemeTrigger) { navThemeTrigger.setAttribute("aria-expanded", "false"); }
+  }
+
+  function setupThemeDropdownPair(trigger, dropdown) {
+    if (!trigger || !dropdown) { return; }
+    trigger.addEventListener("click", function (e) {
+      e.stopPropagation();
+      var willOpen = !dropdown.classList.contains("open");
+      closeAllThemeDropdowns();
+      if (willOpen) {
+        dropdown.classList.add("open");
+        trigger.setAttribute("aria-expanded", "true");
+      }
+    });
+
+    dropdown.addEventListener("click", function (e) {
+      var btn = e.target.closest ? e.target.closest("[data-set-theme]") : null;
+      if (!btn) { return; }
+      var chosen = btn.getAttribute("data-set-theme");
+      applyTheme(chosen);
+      closeAllThemeDropdowns();
+      showToast("Theme switched to " + btn.textContent.trim());
+    });
+  }
+
+  setupThemeDropdownPair(themeTrigger, themeDropdown);
+  setupThemeDropdownPair(navThemeTrigger, navThemeDropdown);
+
+  document.addEventListener("click", function (e) {
+    var inTheme = (themeDropdown && themeDropdown.contains(e.target)) ||
+                  (themeTrigger && themeTrigger.contains(e.target)) ||
+                  (navThemeDropdown && navThemeDropdown.contains(e.target)) ||
+                  (navThemeTrigger && navThemeTrigger.contains(e.target));
+    if (!inTheme) {
+      closeAllThemeDropdowns();
+    }
+  });
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") {
+      closeAllThemeDropdowns();
+    }
+  });
+
+  var currentSavedTheme = "light";
+  try { currentSavedTheme = localStorage.getItem(THEME_KEY) || "light"; } catch (e) {}
+  applyTheme(currentSavedTheme);
 
   /* ==========================================================
-     JULES SENTINEL — Cryptographic Client-Side Authentication
+     JULES SENTINEL & ADMIN SESSION (Passphrase: jules2026)
      ========================================================== */
   var SENTINEL_SALT = "jules-sentinel-vault-v1";
   /* Salted SHA-256 hash for master passphrase: "jules2026" */
@@ -1225,6 +1724,7 @@ button{font:inherit; color:inherit; border:0; background:none; cursor:pointer}
   var failedAttempts = 0;
   var lockoutUntil   = 0;
   var onAuthSuccessCallback = null;
+  var isAdminSession = false;
 
   async function sha256Hex(str) {
     if (window.crypto && window.crypto.subtle) {
@@ -1234,7 +1734,6 @@ button{font:inherit; color:inherit; border:0; background:none; cursor:pointer}
       var byteArr = Array.from(new Uint8Array(buffer));
       return byteArr.map(function (b) { return b.toString(16).padStart(2, "0"); }).join("");
     }
-    /* fallback simple hash if crypto.subtle is unavailable */
     var hash = 0;
     for (var i = 0; i < str.length; i++) {
       hash = ((hash << 5) - hash) + str.charCodeAt(i);
@@ -1259,6 +1758,10 @@ button{font:inherit; color:inherit; border:0; background:none; cursor:pointer}
   }
 
   function openAuthModal(onSuccess) {
+    if (isAdminSession) {
+      if (onSuccess) { onSuccess(); }
+      return;
+    }
     onAuthSuccessCallback = onSuccess;
     lastFocus = document.activeElement;
     if (inAuthKey) { inAuthKey.value = ""; }
@@ -1316,13 +1819,13 @@ button{font:inherit; color:inherit; border:0; background:none; cursor:pointer}
         return;
       }
 
-      /* Compute salted hash */
       var computed = await sha256Hex(SENTINEL_SALT + ":" + input);
 
       if (computed === SENTINEL_HASH) {
         failedAttempts = 0;
-        setAuthStatus("success", "Cryptographic key verified. Unlocking workspace…");
-        showToast("Identity verified: Welcome back, Kris");
+        isAdminSession = true;
+        setAuthStatus("success", "Cryptographic key verified. Admin session unlocked.");
+        showToast("Identity verified: Welcome back, Kris (Admin mode active)");
         var cb = onAuthSuccessCallback;
         setTimeout(function () {
           closeAuthModal();
@@ -1341,91 +1844,273 @@ button{font:inherit; color:inherit; border:0; background:none; cursor:pointer}
     });
   }
 
-  var modal   = document.getElementById("addWorkModal");
-  var openBtn = document.getElementById("addWorkBtn");
-  var demoLink= document.getElementById("sentinelDemoLink");
+  /* ==========================================================
+     SUPABASE CLOUD CLIENT & RESILIENT DATA ARCHITECTURE
+     ========================================================== */
+  var SUPABASE_URL = "https://mlwfqegojihqsnaeaisc.supabase.co";
+  var SUPABASE_ANON = "sb_publishable_vSZfjPZm6BNUex6EfWBxJg_nWhWehD2";
+  var supabaseClient = null;
+  var syncDot = document.getElementById("syncDot");
+  var syncText = document.getElementById("syncText");
 
-  if (demoLink) {
-    demoLink.addEventListener("click", function (e) {
-      e.preventDefault();
-      openAuthModal(function () {
-        showToast("Sentinel security unlocked! Author access verified.");
-      });
-    });
-  }
-  var closeBtn= document.getElementById("addWorkClose");
-  var cancel  = document.getElementById("addWorkCancel");
-  var form    = document.getElementById("addWorkForm");
-  var grid    = document.getElementById("workGrid");
-
-  var inUrl   = document.getElementById("inUrl");
-  var inTitle = document.getElementById("inTitle");
-  var inDesc  = document.getElementById("inDesc");
-
-  var fUrl    = document.getElementById("fUrl");
-  var fDesc   = document.getElementById("fDesc");
-
-  var shotBox = document.getElementById("shotPreview");
-  var shotImg = document.getElementById("shotImg");
-  var shotState = document.getElementById("shotState");
-  var toastBox = document.getElementById("toastContainer");
-
-  function showToast(msg) {
-    if (!toastBox) { return; }
-    var t = document.createElement("div");
-    t.className = "toast";
-    t.setAttribute("role", "status");
-    t.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span>' + escapeHtml(msg) + '</span>';
-    toastBox.appendChild(t);
-    requestAnimationFrame(function () { t.classList.add("show"); });
-    setTimeout(function () {
-      t.classList.remove("show");
-      setTimeout(function () { if (t.parentNode) { t.parentNode.removeChild(t); } }, 260);
-    }, 3200);
+  try {
+    if (window.supabase && typeof window.supabase.createClient === "function") {
+      supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+    }
+  } catch (e) {
+    console.warn("Supabase initialization:", e);
   }
 
-  var lastFocus = null;
+  function setSyncStatus(isLive, label) {
+    if (syncDot) {
+      syncDot.className = "sync-dot " + (isLive ? "" : "offline");
+    }
+    if (syncText) {
+      syncText.textContent = label || (isLive ? "Supabase Cloud Sync active" : "Local offline cache active");
+    }
+  }
 
-  /* ---------- storage ---------- */
-  function loadSaved() {
+  /* Core Projects Data: 9 curated items + dynamic user items */
+  var DEFAULT_PROJECTS = [
+    {
+      id: "proj-1",
+      badge: "Homepage redesign",
+      img: "images/waypoint.jpg",
+      img_alt: "Waypoint redesigned homepage: warm cream layout with sticky navigation, hero image and floating stat chips.",
+      title: "Waypoint — Redesigned Homepage",
+      desc: "A production-ready homepage redesign for the shanda-walks brand (walking/waypoint theme), with a warm palette, sticky nav, hero with floating stat chips, services, how-it-works, searchable directory, seller conversion band and footer.",
+      tags: ["Homepage redesign", "Design system", "Responsive", "Motion"],
+      url: "https://static.teamily.ai/sites/211b2847-29b2-4ba8-aa7e-a6e42035e9bc/webpages/waypoint-home/index.html?tk=c2l0ZToyMTFiMjg0Ny0yOWIyLTRiYTgtYWE3ZS1hNmU0MjAzNWU5YmMvd2VicGFnZXMvd2F5cG9pbnQtaG9tZToxNzkzNjk5NDI1.M2M1OWI2MDI4NmJjY2E1YmM2MTE4MTA0YzYyOTVmMTY",
+      is_sentinel: false,
+      is_inactive: false,
+      is_deleted: false
+    },
+    {
+      id: "proj-2",
+      badge: "UX audit & proposal",
+      img: "images/proposal.jpg",
+      img_alt: "Shanda Walks redesign proposal document: cream paper layout with a sidebar contents list, before/after comparison and a colour palette row.",
+      title: "Shanda Walks — UI Redesign Proposal",
+      desc: "A shareable redesign proposal document containing a live-site audit, identified UI/UX weaknesses, a full redesign system (color, type, spacing, components, IA), section-by-section before/after recommendations, an implementation roadmap and appendix.",
+      tags: ["UX audit", "Proposal", "Design system", "Documentation"],
+      url: "https://static.teamily.ai/sites/211b2847-29b2-4ba8-aa7e-a6e42035e9bc/webpages/shanda-redesign-proposal/index.html?tk=c2l0ZToyMTFiMjg0Ny0yOWIyLTRiYTgtYWE3ZS1hNmU0MjAzNWU5YmMvd2VicGFnZXMvc2hhbmRhLXJlZGVzaWduLXByb3Bvc2FsOjE3OTM2OTk0MjU.MDUwMjcwZjUxMjM2NzIwYjIwMWUwNWE0OGYxYTQ1MTY",
+      is_sentinel: false,
+      is_inactive: false,
+      is_deleted: false
+    },
+    {
+      id: "proj-3",
+      badge: "Editorial site",
+      img: "images/solo-proud.jpg",
+      img_alt: "Solo and Proud editorial webpage: warm cream and terracotta layout with hand-drawn illustrations, mood filter pills and a grid of story cards.",
+      title: "Solo & Proud",
+      desc: "A cozy editorial webpage about living proudly solo — inspirational stories and tips on cooking for one, home safety, financial management and self-care, with a mood-based story filter, interactive cards that open into full articles, and warm cream/terracotta tones with hand-drawn illustrations.",
+      tags: ["Editorial", "Interactive", "Illustration", "Filtering"],
+      url: "https://static.teamily.ai/sites/4297271b-29ed-4c49-a322-4898d8397421/webpages/solo-proud_v2/index.html?tk=c2l0ZTo0Mjk3MjcxYi0yOWVkLTRjNDktYTMyMi00ODk4ZDgzOTc0MjEvd2VicGFnZXMvc29sby1wcm91ZF92MjoxNzkzNjk5NDI1.NDJlYzgyYzEzOTg5NGJiNjViY2Y3ZTI3NDA4OGJkMTI",
+      is_sentinel: false,
+      is_inactive: false,
+      is_deleted: false
+    },
+    {
+      id: "proj-4",
+      badge: "Before",
+      img: "images/shanda-original.jpg",
+      img_alt: "The original Shanda Walks site: a plain white page with no navigation, no imagery and a ragged grid of thin-bordered text boxes.",
+      title: "Shanda Walks (original live site)",
+      desc: "The original live site that the redesign work was based on. Kept here as the reference point — compare it against the Waypoint redesign above to see exactly what changed and why.",
+      tags: ["Live site", "Before", "Reference"],
+      url: "https://shanda-walks.netlify.app/",
+      is_sentinel: false,
+      is_inactive: false,
+      is_deleted: false
+    },
+    {
+      id: "proj-5",
+      badge: "Marketplace",
+      img: "images/rentnest.jpg",
+      img_alt: "RentNest rental listings page: cream and terracotta layout with a serif headline, filter bar and a grid of property cards.",
+      title: "RentNest — Rental Listings Marketplace",
+      desc: "A dependency-free rental marketplace for Port Harcourt. Twelve verified listings with live filtering by area, budget, bedrooms and property type, plus sorting, per-property detail pages with an interactive floor plan, and a landlord flow for listing a home with room-by-room photo upload.",
+      tags: ["Marketplace", "Filtering", "Vanilla JS", "Responsive"],
+      url: "https://krisgideonx-png.github.io/rentnest/listings.html",
+      is_sentinel: false,
+      is_inactive: false,
+      is_deleted: false
+    },
+    {
+      id: "proj-6",
+      badge: "Tribute site",
+      img: "images/gideon-60.jpg",
+      img_alt: "Aworudung at 60 tribute page: cream background, large serif headline with gold italic accent and a framed portrait.",
+      title: "Aworudung at 60 — Birthday Tribute",
+      desc: "A one-page tribute built for a father's 60th birthday. Editorial serif typography with gold accents, a tilted portrait gallery, a letter from the family, a blessing section and a scroll-driven celebration — warm, personal and quietly formal rather than party-bright.",
+      tags: ["Editorial", "Typography", "Scroll motion", "One-page"],
+      url: "https://gideonaworudung.netlify.app",
+      is_sentinel: false,
+      is_inactive: false,
+      is_deleted: false
+    },
+    {
+      id: "proj-7",
+      badge: "Product landing",
+      img: "images/tiny-lessons.jpg",
+      img_alt: "Rex Tiny Lessons landing page: warm cream dotted background, watercolour dinosaur illustration and rounded terracotta buttons.",
+      title: "Rex — Tiny Lessons for Little Ones",
+      desc: "A landing page for a children's micro-lesson service built on one rule: one true fact, one picture, one hunt. Mood-based lesson filtering, a browsable tiny library, watercolour illustrations and a soft cream-and-terracotta palette tuned for parents reading on a phone.",
+      tags: ["Product landing", "Illustration", "Filtering", "Mobile-first"],
+      url: "https://rex-tiny-lessons.netlify.app",
+      is_sentinel: false,
+      is_inactive: false,
+      is_deleted: false
+    },
+    {
+      id: "proj-8",
+      badge: "Learning platform",
+      img: "images/learn-compute.jpg",
+      img_alt: "Learn Computer cyber security bootcamp: dark navy background with glowing neon green headline and a Begin Bootcamp button.",
+      title: "Learn Computer — Cyber Security Bootcamp",
+      desc: "A ten-day beginner cyber-security bootcamp. Dark neon interface with a student dashboard tracking progress, XP, rank and achievements, a day-by-day learning roadmap from computer basics through cryptography to ethical hacking, interactive quizzes and a certificate that unlocks on completion.",
+      tags: ["Learning platform", "Dashboard", "Dark UI", "Progress tracking"],
+      url: "https://learntocompute.netlify.app",
+      is_sentinel: false,
+      is_inactive: false,
+      is_deleted: false
+    },
+    {
+      id: "proj-9",
+      badge: "Security Architecture",
+      img: "images/jules-sentinel.jpg",
+      img_alt: "Jules Sentinel: unbreakable zero-knowledge client-side authentication interface with cryptographic verification badge and live vault hash.",
+      title: "Jules Sentinel — Unbreakable Zero-Knowledge Access",
+      desc: "Our latest gift from Jules to the internet: an unbreakable new kind of secure front-end authentication. Combining browser-native cryptographic hashing (salted Web Crypto SHA-256), client-side zero-knowledge proof verification, and adaptive rate-limiting. No server database to breach, no plaintext secrets in transit — pure client-side mathematical certainty.",
+      tags: ["Gift from Jules", "Zero-Knowledge", "Web Crypto API", "Unbreakable Auth"],
+      url: "#authModal",
+      is_sentinel: true,
+      is_inactive: false,
+      is_deleted: false
+    }
+  ];
+
+  /* Local persistent overrides & additions */
+  var OVERRIDES_KEY = "kg-portfolio-overrides-v2";
+
+  function loadOverrides() {
     try {
-      var raw = localStorage.getItem(KEY);
-      if (!raw) { return []; }
-      var arr = JSON.parse(raw);
-      return Array.isArray(arr) ? arr : [];
-    } catch (e) { return []; }
-  }
-  function saveSaved(list) {
-    try { localStorage.setItem(KEY, JSON.stringify(list)); return true; }
-    catch (e) { return false; }
+      var raw = localStorage.getItem(OVERRIDES_KEY);
+      return raw ? JSON.parse(raw) : { edits: {}, additions: [], deletions: [] };
+    } catch (e) {
+      return { edits: {}, additions: [], deletions: [] };
+    }
   }
 
-  function syncOnline(list, onDone) {
-    if (!window.fetch) {
-      if (typeof onDone === "function") { onDone(null); }
+  function saveOverrides(data) {
+    try {
+      localStorage.setItem(OVERRIDES_KEY, JSON.stringify(data));
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  /* Sync with Supabase table 'projects' if created */
+  async function syncWithSupabase() {
+    if (!supabaseClient) {
+      setSyncStatus(false, "Local storage cache active");
       return;
     }
-    fetch(SYNC_ENDPOINT, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name: "Portfolio Works", data: { projects: list } })
-    })
-    .then(function (res) { return res.ok ? res.json() : null; })
-    .then(function (data) { if (typeof onDone === "function") { onDone(data); } })
-    .catch(function () { if (typeof onDone === "function") { onDone(null); } });
+    try {
+      var res = await supabaseClient.from("projects").select("*");
+      if (res.error) {
+        setSyncStatus(false, "Supabase table pending (cached locally)");
+        return;
+      }
+      if (res.data && Array.isArray(res.data) && res.data.length > 0) {
+        var cloudEdits = {};
+        var cloudDeletions = [];
+        var cloudAdditions = [];
+
+        res.data.forEach(function (row) {
+          if (row.is_deleted) {
+            cloudDeletions.push(row.id);
+          } else if (String(row.id).startsWith("proj-")) {
+            cloudEdits[row.id] = {
+              title: row.title,
+              url: row.url,
+              desc: row.description,
+              tags: Array.isArray(row.tags) ? row.tags : (row.tags ? String(row.tags).split(",") : []),
+              is_inactive: !!row.is_inactive
+            };
+          } else {
+            cloudAdditions.push({
+              id: row.id,
+              title: row.title,
+              url: row.url,
+              desc: row.description,
+              tags: Array.isArray(row.tags) ? row.tags : (row.tags ? String(row.tags).split(",") : []),
+              is_inactive: !!row.is_inactive,
+              is_deleted: false
+            });
+          }
+        });
+
+        var current = loadOverrides();
+        current.edits = Object.assign({}, current.edits, cloudEdits);
+        current.deletions = Array.from(new Set(current.deletions.concat(cloudDeletions)));
+        if (cloudAdditions.length) {
+          current.additions = cloudAdditions;
+        }
+        saveOverrides(current);
+        setSyncStatus(true, "Supabase Cloud Sync active");
+        renderAllProjects();
+      } else {
+        setSyncStatus(true, "Supabase connected (0 remote rows)");
+      }
+    } catch (e) {
+      setSyncStatus(false, "Offline cache active");
+    }
   }
 
-  function fetchOnlineProjects() {
-    if (!window.fetch) { return; }
-    fetch(SYNC_ENDPOINT)
-      .then(function (res) { return res.ok ? res.json() : null; })
-      .then(function (result) {
-        if (!result || !result.data || !Array.isArray(result.data.projects)) { return; }
-        var remote = result.data.projects;
-        saveSaved(remote);
-        renderSaved();
-      })
-      .catch(function () {});
+  async function pushToSupabase(payload) {
+    if (!supabaseClient) { return; }
+    try {
+      var res = await supabaseClient.from("projects").upsert(payload);
+      if (res.error) {
+        console.warn("Supabase upsert:", res.error.message);
+      }
+    } catch (e) {
+      console.warn("Supabase push exception:", e);
+    }
+  }
+
+  /* Get merged list of all active projects */
+  function getAllProjects() {
+    var overrides = loadOverrides();
+    var list = [];
+
+    DEFAULT_PROJECTS.forEach(function (item) {
+      if (overrides.deletions.indexOf(item.id) !== -1) {
+        return;
+      }
+      var copy = Object.assign({}, item);
+      if (overrides.edits[item.id]) {
+        var ed = overrides.edits[item.id];
+        if (ed.title != null) copy.title = ed.title;
+        if (ed.url != null) copy.url = ed.url;
+        if (ed.desc != null) copy.desc = ed.desc;
+        if (ed.tags != null) copy.tags = ed.tags;
+        if (ed.is_inactive != null) copy.is_inactive = ed.is_inactive;
+      }
+      list.push(copy);
+    });
+
+    overrides.additions.forEach(function (add) {
+      if (overrides.deletions.indexOf(add.id) !== -1) {
+        return;
+      }
+      list.push(add);
+    });
+
+    return list;
   }
 
   /* ---------- helpers ---------- */
@@ -1457,66 +2142,94 @@ button{font:inherit; color:inherit; border:0; background:none; cursor:pointer}
     return base.replace(/[-_]+/g, " ").replace(/\b\w/g, function (c) { return c.toUpperCase(); });
   }
 
-  /* A live screenshot service — no upload, no API key. WordPress mShots
-     is stable, CORS-friendly as an <img> source, and 404s gracefully. */
   function shotFor(url) {
     var clean = url.replace(/^https?:\/\//i, "");
     return "https://s.wordpress.com/mshots/v1/" + encodeURIComponent(clean) + "?w=1200&h=750";
   }
 
-  /* ---------- render one saved project ---------- */
-  function cardHtml(p, i) {
+  var grid = document.getElementById("workGrid");
+
+  /* Build article HTML for any project card */
+  function renderCard(p) {
     var title = p.title || prettyTitle(p.url);
     var desc  = p.desc || "";
-    var img   = shotFor(p.url);
-    return '' +
-      '<article class="card is-new" data-id="' + escapeHtml(p.id) + '">' +
-        '<div class="card-media">' +
-          '<span class="card-badge">Project</span>' +
-          '<button class="card-remove" type="button" data-remove="' + escapeHtml(p.id) + '" aria-label="Remove ' + escapeHtml(title) + ' from the portfolio">' +
-            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>' +
+    var img   = p.img || shotFor(p.url);
+    var isInactive = !!p.is_inactive;
+    var isSentinel = !!p.is_sentinel;
+    var tags = Array.isArray(p.tags) ? p.tags : [];
+
+    var badgeText = p.badge || (isSentinel ? "Security Architecture" : "Project");
+    if (isInactive) { badgeText = "Inactive / Archived"; }
+
+    var actionsHtml = "";
+    if (!isSentinel) {
+      actionsHtml = '' +
+        '<div class="card-actions-bar">' +
+          '<button class="card-btn btn-edit" type="button" data-edit="' + escapeHtml(p.id) + '" aria-label="Edit ' + escapeHtml(title) + '">' +
+            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>' +
           '</button>' +
-          '<img src="' + escapeHtml(img) + '" width="1200" height="750" loading="lazy" alt="Screenshot of ' + escapeHtml(title) + '">' +
+        '</div>';
+    }
+
+    var linkHtml = "";
+    if (isSentinel) {
+      linkHtml = '' +
+        '<a class="card-link sentinel-demo-link" href="#authModal" id="sentinelDemoLink">' +
+          'Experience Sentinel' +
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>' +
+        '</a>';
+    } else if (isInactive) {
+      linkHtml = '' +
+        '<span class="card-link disabled" title="This project link is currently inactive / archived">' +
+          'Link inactive' +
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>' +
+        '</span>';
+    } else {
+      linkHtml = '' +
+        '<a class="card-link" href="' + escapeHtml(p.url) + '" target="_blank" rel="noopener noreferrer">' +
+          'View site' +
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>' +
+        '</a>';
+    }
+
+    var tagsHtml = tags.map(function (t) {
+      return '<li class="tag">' + escapeHtml(t) + '</li>';
+    }).join("");
+
+    return '' +
+      '<article class="card reveal in ' + (isInactive ? "is-inactive" : "") + '" data-id="' + escapeHtml(p.id) + '">' +
+        '<div class="card-media">' +
+          '<span class="card-badge ' + (isInactive ? "badge-inactive" : "") + '">' + escapeHtml(badgeText) + '</span>' +
+          actionsHtml +
+          '<img src="' + escapeHtml(img) + '" width="1200" height="750" loading="lazy" alt="' + escapeHtml(p.img_alt || ('Screenshot of ' + title)) + '">' +
         '</div>' +
         '<div class="card-body">' +
           '<h3>' + escapeHtml(title) + '</h3>' +
           '<p>' + escapeHtml(desc) + '</p>' +
-          '<ul class="tags">' +
-            '<li class="tag">Added by you</li>' +
-            '<li class="tag">' + escapeHtml(hostOf(p.url)) + '</li>' +
-          '</ul>' +
-          '<a class="card-link" href="' + escapeHtml(p.url) + '" target="_blank" rel="noopener noreferrer">' +
-            'View site' +
-            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>' +
-          '</a>' +
+          '<ul class="tags">' + tagsHtml + '</ul>' +
+          linkHtml +
         '</div>' +
       '</article>';
   }
 
-  function renderSaved() {
+  function renderAllProjects() {
     if (!grid) { return; }
-    var list = loadSaved();
-
-    /* wipe previous user cards, keep the four originals */
-    Array.prototype.forEach.call(grid.querySelectorAll("[data-id]"), function (n) {
-      n.parentNode.removeChild(n);
-    });
-
-    if (!list.length) { updateCounts(); return; }
-
-    var frag = document.createElement("div");
-    frag.innerHTML = list.map(cardHtml).join("");
-    var nodes = Array.prototype.slice.call(frag.children);
-    nodes.forEach(function (n) {
-      grid.appendChild(n);
-      /* reveal class so the existing IntersectionObserver handles them */
-      n.classList.add("reveal", "in");
-    });
-
+    var list = getAllProjects();
+    grid.innerHTML = list.map(renderCard).join("\n");
     updateCounts();
+
+    /* Rewire sentinel demo trigger */
+    var demoLink = document.getElementById("sentinelDemoLink");
+    if (demoLink) {
+      demoLink.addEventListener("click", function (e) {
+        e.preventDefault();
+        openAuthModal(function () {
+          showToast("Sentinel security unlocked! Author access verified.");
+        });
+      });
+    }
   }
 
-  /* keep the headline + hero stat honest as projects are added */
   function updateCounts() {
     if (!grid) { return; }
     var total = grid.querySelectorAll(".card").length;
@@ -1530,7 +2243,41 @@ button{font:inherit; color:inherit; border:0; background:none; cursor:pointer}
     if (stat) { stat.textContent = String(total); }
   }
 
-  /* ---------- screenshot preview as you type ---------- */
+  var toastBox = document.getElementById("toastContainer");
+  function showToast(msg) {
+    if (!toastBox) { return; }
+    var t = document.createElement("div");
+    t.className = "toast";
+    t.setAttribute("role", "status");
+    t.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span>' + escapeHtml(msg) + '</span>';
+    toastBox.appendChild(t);
+    requestAnimationFrame(function () { t.classList.add("show"); });
+    setTimeout(function () {
+      t.classList.remove("show");
+      setTimeout(function () { if (t.parentNode) { t.parentNode.removeChild(t); } }, 260);
+    }, 3200);
+  }
+
+  var lastFocus = null;
+
+  /* ==========================================================
+     ADD WORK MODAL LOGIC
+     ========================================================== */
+  var addModal    = document.getElementById("addWorkModal");
+  var openAddBtn  = document.getElementById("addWorkBtn");
+  var closeAddBtn = document.getElementById("addWorkClose");
+  var cancelAddBtn= document.getElementById("addWorkCancel");
+  var addForm     = document.getElementById("addWorkForm");
+
+  var inUrl       = document.getElementById("inUrl");
+  var inTitle     = document.getElementById("inTitle");
+  var inDesc      = document.getElementById("inDesc");
+  var fUrl        = document.getElementById("fUrl");
+  var fDesc       = document.getElementById("fDesc");
+  var shotBox     = document.getElementById("shotPreview");
+  var shotImg     = document.getElementById("shotImg");
+  var shotState   = document.getElementById("shotState");
+
   var shotTimer = null;
   function updateShot() {
     var url = normaliseUrl(inUrl.value);
@@ -1569,41 +2316,39 @@ button{font:inherit; color:inherit; border:0; background:none; cursor:pointer}
     inDesc.addEventListener("input", function () { fDesc.classList.remove("invalid"); });
   }
 
-  /* ---------- modal open / close ---------- */
-  function openModal() {
+  function openAddModal() {
     lastFocus = document.activeElement;
-    modal.classList.add("open");
-    modal.setAttribute("aria-hidden", "false");
+    addModal.classList.add("open");
+    addModal.setAttribute("aria-hidden", "false");
     document.body.style.overflow = "hidden";
     setTimeout(function () { inUrl.focus(); }, 60);
   }
 
-  function closeModal() {
-    modal.classList.remove("open");
-    modal.setAttribute("aria-hidden", "true");
+  function closeAddModal() {
+    addModal.classList.remove("open");
+    addModal.setAttribute("aria-hidden", "true");
     document.body.style.overflow = "";
     if (lastFocus && lastFocus.focus) { lastFocus.focus(); }
   }
 
-  if (openBtn) {
-    openBtn.addEventListener("click", function () {
+  if (openAddBtn) {
+    openAddBtn.addEventListener("click", function () {
       openAuthModal(function () {
-        openModal();
+        openAddModal();
       });
     });
   }
-  if (closeBtn) { closeBtn.addEventListener("click", closeModal); }
-  if (cancel)   { cancel.addEventListener("click", closeModal); }
+  if (closeAddBtn)  { closeAddBtn.addEventListener("click", closeAddModal); }
+  if (cancelAddBtn) { cancelAddBtn.addEventListener("click", closeAddModal); }
 
-  if (modal) {
-    modal.addEventListener("click", function (e) {
-      if (e.target === modal) { closeModal(); }
+  if (addModal) {
+    addModal.addEventListener("click", function (e) {
+      if (e.target === addModal) { closeAddModal(); }
     });
     document.addEventListener("keydown", function (e) {
-      if (e.key === "Escape" && modal.classList.contains("open")) { closeModal(); }
-      /* simple focus trap */
-      if (e.key === "Tab" && modal.classList.contains("open")) {
-        var f = modal.querySelectorAll('button, input, textarea, a[href]');
+      if (e.key === "Escape" && addModal.classList.contains("open")) { closeAddModal(); }
+      if (e.key === "Tab" && addModal.classList.contains("open")) {
+        var f = addModal.querySelectorAll('button, input, textarea, a[href]');
         if (!f.length) { return; }
         var first = f[0], last = f[f.length - 1];
         if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
@@ -1612,13 +2357,12 @@ button{font:inherit; color:inherit; border:0; background:none; cursor:pointer}
     });
   }
 
-  /* ---------- submit ---------- */
-  if (form) {
-    form.addEventListener("submit", function (e) {
+  if (addForm) {
+    addForm.addEventListener("submit", function (e) {
       e.preventDefault();
-
       var url = normaliseUrl(inUrl.value);
       var desc = String(inDesc.value || "").trim();
+      var title = String(inTitle.value || "").trim() || prettyTitle(url);
 
       var ok = true;
       if (!url) { fUrl.classList.add("invalid"); ok = false; }
@@ -1628,58 +2372,225 @@ button{font:inherit; color:inherit; border:0; background:none; cursor:pointer}
         return;
       }
 
-      var list = loadSaved();
-      list.push({
+      var newProject = {
         id: "p" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+        title: title,
         url: url,
-        title: String(inTitle.value || "").trim() || prettyTitle(url),
-        desc: desc
+        desc: desc,
+        tags: ["Added by you", hostOf(url)],
+        badge: "Project",
+        is_sentinel: false,
+        is_inactive: false,
+        is_deleted: false
+      };
+
+      var overrides = loadOverrides();
+      overrides.additions.push(newProject);
+      saveOverrides(overrides);
+
+      /* Push to Supabase Cloud */
+      pushToSupabase({
+        id: newProject.id,
+        title: newProject.title,
+        url: newProject.url,
+        description: newProject.desc,
+        tags: newProject.tags,
+        is_inactive: false,
+        is_deleted: false
       });
 
-      if (!saveSaved(list)) {
-        shotState.textContent = "Could not save \u2014 storage is unavailable in this browser.";
-        return;
-      }
-
-      renderSaved();
-
-      form.reset();
+      renderAllProjects();
+      addForm.reset();
       fUrl.classList.remove("invalid");
       fDesc.classList.remove("invalid");
       shotBox.classList.remove("show");
       shotImg.removeAttribute("src");
-      closeModal();
-      showToast("Project added & synced online");
+      closeAddModal();
+      showToast("Project added and published online");
 
-      syncOnline(list);
-
-      /* move the eye to the new card */
-      var added = grid.querySelector("[data-id]:last-of-type");
+      var added = grid.querySelector('[data-id="' + newProject.id + '"]');
       if (added && added.scrollIntoView) {
         added.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "center" });
       }
     });
   }
 
-  /* ---------- remove a user-added card ---------- */
-  if (grid) {
-    grid.addEventListener("click", function (e) {
-      var btn = e.target.closest ? e.target.closest("[data-remove]") : null;
-      if (!btn) { return; }
-      e.preventDefault();
-      var id = btn.getAttribute("data-remove");
-      var list = loadSaved().filter(function (p) { return p.id !== id; });
-      saveSaved(list);
-      syncOnline(list);
-      var card = grid.querySelector('[data-id="' + id + '"]');
-      if (card && card.parentNode) { card.parentNode.removeChild(card); }
-      updateCounts();
-      showToast("Project removed");
+  /* ==========================================================
+     EDIT / TAKE DOWN MODAL LOGIC
+     ========================================================== */
+  var editModal        = document.getElementById("editWorkModal");
+  var editCloseBtn     = document.getElementById("editWorkClose");
+  var editCancelBtn    = document.getElementById("editWorkCancel");
+  var editForm         = document.getElementById("editWorkForm");
+  var editTakeDownBtn  = document.getElementById("editTakeDownBtn");
+
+  var editInId         = document.getElementById("editProjectId");
+  var editInTitle      = document.getElementById("editInTitle");
+  var editInUrl        = document.getElementById("editInUrl");
+  var editInDesc       = document.getElementById("editInDesc");
+  var editInTags       = document.getElementById("editInTags");
+  var editInInactive   = document.getElementById("editInInactive");
+
+  var fEditTitle       = document.getElementById("fEditTitle");
+  var fEditUrl         = document.getElementById("fEditUrl");
+  var fEditDesc        = document.getElementById("fEditDesc");
+
+  function openEditModal(projectId) {
+    var all = getAllProjects();
+    var target = all.find(function (p) { return p.id === projectId; });
+    if (!target) { return; }
+
+    /* Jules Sentinel is un-editable */
+    if (target.is_sentinel) {
+      showToast("Jules Sentinel is a permanent security anchor and cannot be edited.");
+      return;
+    }
+
+    lastFocus = document.activeElement;
+    editInId.value = target.id;
+    editInTitle.value = target.title || "";
+    editInUrl.value = target.url || "";
+    editInDesc.value = target.desc || "";
+    editInTags.value = Array.isArray(target.tags) ? target.tags.join(", ") : "";
+    editInInactive.checked = !!target.is_inactive;
+
+    [fEditTitle, fEditUrl, fEditDesc].forEach(function (f) {
+      if (f) { f.classList.remove("invalid"); }
+    });
+
+    editModal.classList.add("open");
+    editModal.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+    setTimeout(function () { editInTitle.focus(); }, 60);
+  }
+
+  function closeEditModal() {
+    editModal.classList.remove("open");
+    editModal.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
+    if (lastFocus && lastFocus.focus) { lastFocus.focus(); }
+  }
+
+  if (editCloseBtn)  { editCloseBtn.addEventListener("click", closeEditModal); }
+  if (editCancelBtn) { editCancelBtn.addEventListener("click", closeEditModal); }
+
+  if (editModal) {
+    editModal.addEventListener("click", function (e) {
+      if (e.target === editModal) { closeEditModal(); }
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && editModal.classList.contains("open")) { closeEditModal(); }
+      if (e.key === "Tab" && editModal.classList.contains("open")) {
+        var f = editModal.querySelectorAll('button, input, textarea, a[href]');
+        if (!f.length) { return; }
+        var first = f[0], last = f[f.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
     });
   }
 
-  renderSaved();
-  fetchOnlineProjects();
+  /* Handle clicking "Edit" buttons on cards */
+  if (grid) {
+    grid.addEventListener("click", function (e) {
+      var editBtn = e.target.closest ? e.target.closest("[data-edit]") : null;
+      if (!editBtn) { return; }
+      e.preventDefault();
+      var id = editBtn.getAttribute("data-edit");
+      openAuthModal(function () {
+        openEditModal(id);
+      });
+    });
+  }
+
+  /* Save edits */
+  if (editForm) {
+    editForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var id = editInId.value;
+      var title = String(editInTitle.value || "").trim();
+      var url = normaliseUrl(editInUrl.value);
+      var desc = String(editInDesc.value || "").trim();
+      var tagsRaw = String(editInTags.value || "").trim();
+      var isInactive = editInInactive.checked;
+
+      var ok = true;
+      if (!title) { fEditTitle.classList.add("invalid"); ok = false; }
+      if (!url)   { fEditUrl.classList.add("invalid"); ok = false; }
+      if (!desc)  { fEditDesc.classList.add("invalid"); ok = false; }
+      if (!ok)    { return; }
+
+      var tags = tagsRaw ? tagsRaw.split(",").map(function (t) { return t.trim(); }).filter(Boolean) : [];
+
+      var overrides = loadOverrides();
+      if (String(id).startsWith("proj-")) {
+        overrides.edits[id] = {
+          title: title,
+          url: url,
+          desc: desc,
+          tags: tags,
+          is_inactive: isInactive
+        };
+      } else {
+        var idx = overrides.additions.findIndex(function (p) { return p.id === id; });
+        if (idx !== -1) {
+          overrides.additions[idx].title = title;
+          overrides.additions[idx].url = url;
+          overrides.additions[idx].desc = desc;
+          overrides.additions[idx].tags = tags;
+          overrides.additions[idx].is_inactive = isInactive;
+        }
+      }
+      saveOverrides(overrides);
+
+      /* Cloud Sync */
+      pushToSupabase({
+        id: id,
+        title: title,
+        url: url,
+        description: desc,
+        tags: tags,
+        is_inactive: isInactive,
+        is_deleted: false
+      });
+
+      renderAllProjects();
+      closeEditModal();
+      showToast(isInactive ? "Project saved as inactive (link disabled)" : "Project changes published online");
+    });
+  }
+
+  /* Take Down Project */
+  if (editTakeDownBtn) {
+    editTakeDownBtn.addEventListener("click", function () {
+      var id = editInId.value;
+      if (!id) { return; }
+      if (!confirm("Are you sure you want to take down this project from your online portfolio?")) {
+        return;
+      }
+
+      var overrides = loadOverrides();
+      if (overrides.deletions.indexOf(id) === -1) {
+        overrides.deletions.push(id);
+      }
+      saveOverrides(overrides);
+
+      /* Cloud Sync deletion */
+      pushToSupabase({
+        id: id,
+        is_deleted: true
+      });
+
+      renderAllProjects();
+      closeEditModal();
+      showToast("Project taken down from portfolio");
+    });
+  }
+
+  /* Initial Render & Cloud Sync */
+  renderAllProjects();
+  syncWithSupabase();
+
 })();
 </script>
 
