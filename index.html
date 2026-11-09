@@ -994,7 +994,7 @@ button{font:inherit; color:inherit; border:0; background:none; cursor:pointer}
             <a class="btn btn-ghost" href="#contact">Get in touch</a>
           </div>
           <div class="hero-meta reveal d3">
-            <div><b>4</b><span>Live projects</span></div>
+            <div><b>8</b><span>Live projects</span></div>
             <div><b>100%</b><span>Hand-built</span></div>
             <div><b>3</b><span>Breakpoints tested</span></div>
           </div>
@@ -1090,11 +1090,7 @@ button{font:inherit; color:inherit; border:0; background:none; cursor:pointer}
       <div class="work-head">
         <div class="section-head">
           <span class="eyebrow reveal">Selected work</span>
-          <h2 id="work-title" class="reveal d1">Nine projects, all live.</h2>
-          <div class="sync-indicator reveal d2" id="syncIndicator">
-            <span class="sync-dot" id="syncDot" aria-hidden="true"></span>
-            <span id="syncText">Supabase Cloud Sync active</span>
-          </div>
+          <h2 id="work-title" class="reveal d1">Eight projects, all live.</h2>
           <p class="reveal d2">Each card links straight to the running site. Open them in a new tab and resize the window — the responsive behaviour is part of the work.</p>
         </div>
         <button class="btn btn-terra add-work-btn reveal d2" id="addWorkBtn" type="button" aria-haspopup="dialog" aria-controls="authModal">
@@ -1622,88 +1618,8 @@ button{font:inherit; color:inherit; border:0; background:none; cursor:pointer}
   /* ==========================================================
      THEME CONTROLLER (Editorial Light, Midnight Dark, Sepia, Slate)
      ========================================================== */
-  var THEME_KEY = "kg-portfolio-theme-v1";
-  var themeTrigger = document.getElementById("themeTrigger");
-  var themeDropdown = document.getElementById("themeDropdown");
-  var navThemeTrigger = document.getElementById("navThemeTrigger");
-  var navThemeDropdown = document.getElementById("navThemeDropdown");
-  var metaThemeColor = document.getElementById("metaThemeColor");
-  var themeColors = {
-    light: "#FAF6EF",
-    dark: "#0D1117",
-    sepia: "#F5ECD7",
-    slate: "#0F172A"
-  };
-
-  function applyTheme(theme) {
-    if (!themeColors[theme]) { theme = "light"; }
-    document.documentElement.setAttribute("data-theme", theme);
-    if (metaThemeColor) { metaThemeColor.setAttribute("content", themeColors[theme]); }
-    try { localStorage.setItem(THEME_KEY, theme); } catch (e) {}
-
-    var allOpts = document.querySelectorAll("[data-set-theme]");
-    allOpts.forEach(function (opt) {
-      if (opt.getAttribute("data-set-theme") === theme) {
-        opt.classList.add("active");
-        opt.setAttribute("aria-selected", "true");
-      } else {
-        opt.classList.remove("active");
-        opt.removeAttribute("aria-selected");
-      }
-    });
-  }
-
-  function closeAllThemeDropdowns() {
-    if (themeDropdown) { themeDropdown.classList.remove("open"); }
-    if (themeTrigger) { themeTrigger.setAttribute("aria-expanded", "false"); }
-    if (navThemeDropdown) { navThemeDropdown.classList.remove("open"); }
-    if (navThemeTrigger) { navThemeTrigger.setAttribute("aria-expanded", "false"); }
-  }
-
-  function setupThemeDropdownPair(trigger, dropdown) {
-    if (!trigger || !dropdown) { return; }
-    trigger.addEventListener("click", function (e) {
-      e.stopPropagation();
-      var willOpen = !dropdown.classList.contains("open");
-      closeAllThemeDropdowns();
-      if (willOpen) {
-        dropdown.classList.add("open");
-        trigger.setAttribute("aria-expanded", "true");
-      }
-    });
-
-    dropdown.addEventListener("click", function (e) {
-      var btn = e.target.closest ? e.target.closest("[data-set-theme]") : null;
-      if (!btn) { return; }
-      var chosen = btn.getAttribute("data-set-theme");
-      applyTheme(chosen);
-      closeAllThemeDropdowns();
-      showToast("Theme switched to " + btn.textContent.trim());
-    });
-  }
-
-  setupThemeDropdownPair(themeTrigger, themeDropdown);
-  setupThemeDropdownPair(navThemeTrigger, navThemeDropdown);
-
-  document.addEventListener("click", function (e) {
-    var inTheme = (themeDropdown && themeDropdown.contains(e.target)) ||
-                  (themeTrigger && themeTrigger.contains(e.target)) ||
-                  (navThemeDropdown && navThemeDropdown.contains(e.target)) ||
-                  (navThemeTrigger && navThemeTrigger.contains(e.target));
-    if (!inTheme) {
-      closeAllThemeDropdowns();
-    }
-  });
-
-  document.addEventListener("keydown", function (e) {
-    if (e.key === "Escape") {
-      closeAllThemeDropdowns();
-    }
-  });
-
-  var currentSavedTheme = "light";
-  try { currentSavedTheme = localStorage.getItem(THEME_KEY) || "light"; } catch (e) {}
-  applyTheme(currentSavedTheme);
+  var KEY = "kg-portfolio-projects-v1";
+  var SYNC_ENDPOINT = "https://api.restful-api.dev/objects/ff808181a09d98f701a1ba8b71156436";
 
   /* ==========================================================
      JULES SENTINEL & ADMIN SESSION (Passphrase: jules2026)
@@ -2113,6 +2029,34 @@ button{font:inherit; color:inherit; border:0; background:none; cursor:pointer}
     return list;
   }
 
+  function syncOnline(list, onDone) {
+    if (!window.fetch) {
+      if (typeof onDone === "function") { onDone(null); }
+      return;
+    }
+    fetch(SYNC_ENDPOINT, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name: "Portfolio Works", data: { projects: list } })
+    })
+    .then(function (res) { return res.ok ? res.json() : null; })
+    .then(function (data) { if (typeof onDone === "function") { onDone(data); } })
+    .catch(function () { if (typeof onDone === "function") { onDone(null); } });
+  }
+
+  function fetchOnlineProjects() {
+    if (!window.fetch) { return; }
+    fetch(SYNC_ENDPOINT)
+      .then(function (res) { return res.ok ? res.json() : null; })
+      .then(function (result) {
+        if (!result || !result.data || !Array.isArray(result.data.projects)) { return; }
+        var remote = result.data.projects;
+        saveSaved(remote);
+        renderSaved();
+      })
+      .catch(function () {});
+  }
+
   /* ---------- helpers ---------- */
   function escapeHtml(s) {
     return String(s == null ? "" : s)
@@ -2405,8 +2349,10 @@ button{font:inherit; color:inherit; border:0; background:none; cursor:pointer}
       fDesc.classList.remove("invalid");
       shotBox.classList.remove("show");
       shotImg.removeAttribute("src");
-      closeAddModal();
-      showToast("Project added and published online");
+      closeModal();
+      showToast("Project added & synced online");
+
+      syncOnline(list);
 
       var added = grid.querySelector('[data-id="' + newProject.id + '"]');
       if (added && added.scrollIntoView) {
@@ -2496,101 +2442,19 @@ button{font:inherit; color:inherit; border:0; background:none; cursor:pointer}
       var editBtn = e.target.closest ? e.target.closest("[data-edit]") : null;
       if (!editBtn) { return; }
       e.preventDefault();
-      var id = editBtn.getAttribute("data-edit");
-      openAuthModal(function () {
-        openEditModal(id);
-      });
+      var id = btn.getAttribute("data-remove");
+      var list = loadSaved().filter(function (p) { return p.id !== id; });
+      saveSaved(list);
+      syncOnline(list);
+      var card = grid.querySelector('[data-id="' + id + '"]');
+      if (card && card.parentNode) { card.parentNode.removeChild(card); }
+      updateCounts();
+      showToast("Project removed");
     });
   }
 
-  /* Save edits */
-  if (editForm) {
-    editForm.addEventListener("submit", function (e) {
-      e.preventDefault();
-      var id = editInId.value;
-      var title = String(editInTitle.value || "").trim();
-      var url = normaliseUrl(editInUrl.value);
-      var desc = String(editInDesc.value || "").trim();
-      var tagsRaw = String(editInTags.value || "").trim();
-      var isInactive = editInInactive.checked;
-
-      var ok = true;
-      if (!title) { fEditTitle.classList.add("invalid"); ok = false; }
-      if (!url)   { fEditUrl.classList.add("invalid"); ok = false; }
-      if (!desc)  { fEditDesc.classList.add("invalid"); ok = false; }
-      if (!ok)    { return; }
-
-      var tags = tagsRaw ? tagsRaw.split(",").map(function (t) { return t.trim(); }).filter(Boolean) : [];
-
-      var overrides = loadOverrides();
-      if (String(id).startsWith("proj-")) {
-        overrides.edits[id] = {
-          title: title,
-          url: url,
-          desc: desc,
-          tags: tags,
-          is_inactive: isInactive
-        };
-      } else {
-        var idx = overrides.additions.findIndex(function (p) { return p.id === id; });
-        if (idx !== -1) {
-          overrides.additions[idx].title = title;
-          overrides.additions[idx].url = url;
-          overrides.additions[idx].desc = desc;
-          overrides.additions[idx].tags = tags;
-          overrides.additions[idx].is_inactive = isInactive;
-        }
-      }
-      saveOverrides(overrides);
-
-      /* Cloud Sync */
-      pushToSupabase({
-        id: id,
-        title: title,
-        url: url,
-        description: desc,
-        tags: tags,
-        is_inactive: isInactive,
-        is_deleted: false
-      });
-
-      renderAllProjects();
-      closeEditModal();
-      showToast(isInactive ? "Project saved as inactive (link disabled)" : "Project changes published online");
-    });
-  }
-
-  /* Take Down Project */
-  if (editTakeDownBtn) {
-    editTakeDownBtn.addEventListener("click", function () {
-      var id = editInId.value;
-      if (!id) { return; }
-      if (!confirm("Are you sure you want to take down this project from your online portfolio?")) {
-        return;
-      }
-
-      var overrides = loadOverrides();
-      if (overrides.deletions.indexOf(id) === -1) {
-        overrides.deletions.push(id);
-      }
-      saveOverrides(overrides);
-
-      /* Cloud Sync deletion */
-      pushToSupabase({
-        id: id,
-        is_deleted: true
-      });
-
-      renderAllProjects();
-      closeEditModal();
-      showToast("Project taken down from portfolio");
-    });
-  }
-
-  /* Initial Render & Cloud Sync */
-  renderAllProjects();
-  syncWithSupabase();
-
+  renderSaved();
+  fetchOnlineProjects();
 })();
 </script>
 
