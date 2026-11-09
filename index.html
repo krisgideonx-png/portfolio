@@ -106,6 +106,30 @@ sweep(document)})();</script>
   --card-media-bg:#F2ECE0;
   --nav-bg:rgba(250,246,239,.82);
   --modal-overlay:rgba(22,21,15,.55);
+
+  /* type scale (fluid) */
+  --fs-display:clamp(2.6rem, 6.2vw, 4.6rem);
+  --fs-h2:clamp(1.9rem, 3.6vw, 2.9rem);
+  --fs-h3:clamp(1.15rem, 1.7vw, 1.4rem);
+  --fs-lede:clamp(1.05rem, 1.5vw, 1.25rem);
+  --fs-body:1rem;
+  --fs-sm:.875rem;
+  --fs-xs:.78rem;
+
+  /* spacing scale (4px base) */
+  --s1:4px; --s2:8px; --s3:12px; --s4:16px; --s5:24px;
+  --s6:32px; --s7:48px; --s8:64px; --s9:96px; --s10:128px;
+
+  --radius:14px;
+  --radius-lg:22px;
+  --radius-pill:999px;
+
+  --shadow-sm:0 1px 2px rgba(22,21,15,.05), 0 2px 8px rgba(22,21,15,.05);
+  --shadow-md:0 4px 12px rgba(22,21,15,.07), 0 12px 32px rgba(22,21,15,.08);
+  --shadow-lg:0 10px 24px rgba(22,21,15,.10), 0 30px 70px rgba(22,21,15,.14);
+
+  --maxw:1180px;
+  --ease:cubic-bezier(.22,.61,.36,1);
 }
 
 [data-theme="dark"]{
@@ -160,31 +184,6 @@ sweep(document)})();</script>
   --card-media-bg:#1A2234;
   --nav-bg:rgba(15,23,42,.85);
   --modal-overlay:rgba(2,6,23,.78);
-}
-
-  /* type scale (fluid) */
-  --fs-display:clamp(2.6rem, 6.2vw, 4.6rem);
-  --fs-h2:clamp(1.9rem, 3.6vw, 2.9rem);
-  --fs-h3:clamp(1.15rem, 1.7vw, 1.4rem);
-  --fs-lede:clamp(1.05rem, 1.5vw, 1.25rem);
-  --fs-body:1rem;
-  --fs-sm:.875rem;
-  --fs-xs:.78rem;
-
-  /* spacing scale (4px base) */
-  --s1:4px; --s2:8px; --s3:12px; --s4:16px; --s5:24px;
-  --s6:32px; --s7:48px; --s8:64px; --s9:96px; --s10:128px;
-
-  --radius:14px;
-  --radius-lg:22px;
-  --radius-pill:999px;
-
-  --shadow-sm:0 1px 2px rgba(22,21,15,.05), 0 2px 8px rgba(22,21,15,.05);
-  --shadow-md:0 4px 12px rgba(22,21,15,.07), 0 12px 32px rgba(22,21,15,.08);
-  --shadow-lg:0 10px 24px rgba(22,21,15,.10), 0 30px 70px rgba(22,21,15,.14);
-
-  --maxw:1180px;
-  --ease:cubic-bezier(.22,.61,.36,1);
 }
 
 /* ============================================================
@@ -995,7 +994,7 @@ button{font:inherit; color:inherit; border:0; background:none; cursor:pointer}
           </div>
           <div class="hero-meta reveal d3">
             <div><b>4</b><span>Live projects</span></div>
-            <div><b>100%</b><span>Hand-built</span></div>
+            <div><b>Zero</b><span>Dependencies</span></div>
             <div><b>3</b><span>Breakpoints tested</span></div>
           </div>
         </div>
@@ -1365,7 +1364,7 @@ button{font:inherit; color:inherit; border:0; background:none; cursor:pointer}
     </div>
     <div class="foot-bottom">
       <span>&copy; <span id="year">2026</span> Kris Gideon &bull; <a href="mailto:Krisgideonx@gmail.com" style="color:inherit; text-decoration:underline">Krisgideonx@gmail.com</a>. All rights reserved.</span>
-      <span>Built by hand — semantic HTML, no frameworks.</span>
+      <span>Engineered with precision — semantic HTML &amp; zero-framework performance.</span>
     </div>
   </div>
 </footer>
