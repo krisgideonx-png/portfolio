@@ -62,7 +62,18 @@ sweep(document)})();</script>
   (function(){
     var savedTheme = localStorage.getItem("kg-portfolio-theme-v1") || "light";
     document.documentElement.setAttribute("data-theme", savedTheme);
-    var themeColors = { light: "#FAF6EF", dark: "#0D1117", sepia: "#F5ECD7", slate: "#0F172A" };
+    var themeColors = {
+      light: "#FAF6EF",
+      dark: "#0D1117",
+      sepia: "#F5ECD7",
+      slate: "#0F172A",
+      pink: "#FDF2F4",
+      gold: "#FAF5E8",
+      royal: "#120B1E",
+      deluxe: "#0A1120",
+      frost: "#F0F6FA",
+      emerald: "#F2F7F4"
+    };
     var mc = document.getElementById("metaThemeColor");
     if (mc && themeColors[savedTheme]) { mc.setAttribute("content", themeColors[savedTheme]); }
   })();
@@ -200,6 +211,144 @@ sweep(document)})();</script>
   --contact-text:#F8FAFC;
   --contact-muted:#94A3B8;
   --contact-border:#334155;
+}
+
+[data-theme="pink"]{
+  --ink:#2B121C;
+  --ink-2:#4A2534;
+  --muted:#855A6B;
+  --cream:#FDF2F4;
+  --paper:#FFFFFF;
+  --line:#F2D3DC;
+  --line-2:#E4B6C5;
+  --pine:#D83A6F;
+  --pine-2:#E45587;
+  --terra:#E05370;
+  --terra-2:#F27892;
+  --gold:#F59E0B;
+  --card-media-bg:#FCE4EC;
+  --nav-bg:rgba(253,242,244,.86);
+  --modal-overlay:rgba(43,18,28,.62);
+  --contact-bg:#210D16;
+  --contact-text:#FDF2F4;
+  --contact-muted:#CFA8B8;
+  --contact-border:rgba(255,255,255,.14);
+}
+
+[data-theme="gold"]{
+  --ink:#231B0D;
+  --ink-2:#3D3019;
+  --muted:#786644;
+  --cream:#FAF5E8;
+  --paper:#FFFDF7;
+  --line:#E8DBB8;
+  --line-2:#D9C590;
+  --pine:#B8860B;
+  --pine-2:#D49B14;
+  --terra:#B45309;
+  --terra-2:#D97706;
+  --gold:#EAB308;
+  --card-media-bg:#F3E9CD;
+  --nav-bg:rgba(250,245,232,.86);
+  --modal-overlay:rgba(35,27,13,.62);
+  --contact-bg:#181208;
+  --contact-text:#FAF5E8;
+  --contact-muted:#CBBDA4;
+  --contact-border:rgba(234,179,8,.22);
+}
+
+[data-theme="royal"]{
+  --ink:#FBF7EE;
+  --ink-2:#E2D6F5;
+  --muted:#A594C4;
+  --cream:#120B1E;
+  --paper:#1C122F;
+  --line:#342352;
+  --line-2:#4E357A;
+  --pine:#E5B842;
+  --pine-2:#F3CA58;
+  --terra:#C084FC;
+  --terra-2:#D8B4FE;
+  --gold:#E5B842;
+  --card-media-bg:#25183E;
+  --nav-bg:rgba(18,11,30,.88);
+  --modal-overlay:rgba(10,5,18,.82);
+  --contact-bg:#0A0512;
+  --contact-text:#FBF7EE;
+  --contact-muted:#A594C4;
+  --contact-border:#342352;
+}
+
+[data-theme="deluxe"]{
+  --ink:#F8FAFC;
+  --ink-2:#D1DCED;
+  --muted:#869BB8;
+  --cream:#0A1120;
+  --paper:#111C33;
+  --line:#22365A;
+  --line-2:#314E80;
+  --pine:#D4AF37;
+  --pine-2:#E8C554;
+  --terra:#60A5FA;
+  --terra-2:#93C5FD;
+  --gold:#D4AF37;
+  --card-media-bg:#172646;
+  --nav-bg:rgba(10,17,32,.88);
+  --modal-overlay:rgba(5,9,18,.84);
+  --contact-bg:#050912;
+  --contact-text:#F8FAFC;
+  --contact-muted:#869BB8;
+  --contact-border:#22365A;
+}
+
+[data-theme="frost"]{
+  --ink:#0C1E30;
+  --ink-2:#1D344E;
+  --muted:#57738F;
+  --cream:#F0F6FA;
+  --paper:#FFFFFF;
+  --line:#D0E2EE;
+  --line-2:#B5D2E5;
+  --pine:#0284C7;
+  --pine-2:#0EA5E9;
+  --terra:#2563EB;
+  --terra-2:#3B82F6;
+  --gold:#F59E0B;
+  --card-media-bg:#E2EEF7;
+  --nav-bg:rgba(240,246,250,.86);
+  --modal-overlay:rgba(12,30,48,.6);
+  --contact-bg:#081624;
+  --contact-text:#F0F6FA;
+  --contact-muted:#96B3CC;
+  --contact-border:rgba(255,255,255,.14);
+}
+
+[data-theme="emerald"]{
+  --ink:#0B2317;
+  --ink-2:#1B3D2B;
+  --muted:#4E735F;
+  --cream:#F2F7F4;
+  --paper:#FFFFFF;
+  --line:#D0E2D6;
+  --line-2:#B2CEBC;
+  --pine:#059669;
+  --pine-2:#10B981;
+  --terra:#C2410C;
+  --terra-2:#EA580C;
+  --gold:#F59E0B;
+  --card-media-bg:#E2EDE6;
+  --nav-bg:rgba(242,247,244,.86);
+  --modal-overlay:rgba(11,35,23,.6);
+  --contact-bg:#07170F;
+  --contact-text:#F2F7F4;
+  --contact-muted:#8FB59F;
+  --contact-border:rgba(255,255,255,.14);
+}
+
+[data-theme="gold"] .btn-primary:hover,
+[data-theme="royal"] .btn-primary:hover,
+[data-theme="deluxe"] .btn-primary:hover{
+  color:#16150F;
 }
 
 /* ============================================================
@@ -752,6 +901,9 @@ button{font:inherit; color:inherit; border:0; background:none; cursor:pointer}
 .theme-dropdown{
   position:absolute;
   width:230px;
+  max-height:calc(100vh - 120px);
+  overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
   background:var(--paper);
   border:1.5px solid var(--line-2);
   border-radius:var(--radius);
@@ -811,6 +963,12 @@ button{font:inherit; color:inherit; border:0; background:none; cursor:pointer}
 .theme-swatch.swatch-dark{background:#0D1117; border-color:#484F58}
 .theme-swatch.swatch-sepia{background:#F5ECD7; border-color:#CBB590}
 .theme-swatch.swatch-slate{background:#0F172A; border-color:#475569}
+.theme-swatch.swatch-pink{background:#F8B4C6; border-color:#E27D9A}
+.theme-swatch.swatch-gold{background:#F3CD65; border-color:#C68A1B}
+.theme-swatch.swatch-royal{background:linear-gradient(135deg,#5B21B6 50%,#E5B842 50%); border-color:#E5B842}
+.theme-swatch.swatch-deluxe{background:linear-gradient(135deg,#0F172A 50%,#D4AF37 50%); border-color:#D4AF37}
+.theme-swatch.swatch-frost{background:#BAE6FD; border-color:#38BDF8}
+.theme-swatch.swatch-emerald{background:#A7F3D0; border-color:#059669}
 .theme-check{
   margin-left:auto;
   display:none;
@@ -934,6 +1092,36 @@ button{font:inherit; color:inherit; border:0; background:none; cursor:pointer}
       <span>Slate Modern</span>
       <svg class="theme-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
     </button>
+    <button class="theme-opt" type="button" role="menuitem" data-set-theme="pink">
+      <span class="theme-swatch swatch-pink" aria-hidden="true"></span>
+      <span>Blush Pink</span>
+      <svg class="theme-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+    </button>
+    <button class="theme-opt" type="button" role="menuitem" data-set-theme="gold">
+      <span class="theme-swatch swatch-gold" aria-hidden="true"></span>
+      <span>Luxe Gold</span>
+      <svg class="theme-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+    </button>
+    <button class="theme-opt" type="button" role="menuitem" data-set-theme="royal">
+      <span class="theme-swatch swatch-royal" aria-hidden="true"></span>
+      <span>Royal (Purple & Gold)</span>
+      <svg class="theme-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+    </button>
+    <button class="theme-opt" type="button" role="menuitem" data-set-theme="deluxe">
+      <span class="theme-swatch swatch-deluxe" aria-hidden="true"></span>
+      <span>Deluxe (Blue & Gold)</span>
+      <svg class="theme-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+    </button>
+    <button class="theme-opt" type="button" role="menuitem" data-set-theme="frost">
+      <span class="theme-swatch swatch-frost" aria-hidden="true"></span>
+      <span>Glacial Frost</span>
+      <svg class="theme-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+    </button>
+    <button class="theme-opt" type="button" role="menuitem" data-set-theme="emerald">
+      <span class="theme-swatch swatch-emerald" aria-hidden="true"></span>
+      <span>Forest Emerald</span>
+      <svg class="theme-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+    </button>
   </div>
 </div>
 
@@ -976,6 +1164,36 @@ button{font:inherit; color:inherit; border:0; background:none; cursor:pointer}
             <button class="theme-opt" type="button" role="menuitem" data-set-theme="slate">
               <span class="theme-swatch swatch-slate" aria-hidden="true"></span>
               <span>Slate Modern</span>
+              <svg class="theme-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            </button>
+            <button class="theme-opt" type="button" role="menuitem" data-set-theme="pink">
+              <span class="theme-swatch swatch-pink" aria-hidden="true"></span>
+              <span>Blush Pink</span>
+              <svg class="theme-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            </button>
+            <button class="theme-opt" type="button" role="menuitem" data-set-theme="gold">
+              <span class="theme-swatch swatch-gold" aria-hidden="true"></span>
+              <span>Luxe Gold</span>
+              <svg class="theme-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            </button>
+            <button class="theme-opt" type="button" role="menuitem" data-set-theme="royal">
+              <span class="theme-swatch swatch-royal" aria-hidden="true"></span>
+              <span>Royal (Purple & Gold)</span>
+              <svg class="theme-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            </button>
+            <button class="theme-opt" type="button" role="menuitem" data-set-theme="deluxe">
+              <span class="theme-swatch swatch-deluxe" aria-hidden="true"></span>
+              <span>Deluxe (Blue & Gold)</span>
+              <svg class="theme-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            </button>
+            <button class="theme-opt" type="button" role="menuitem" data-set-theme="frost">
+              <span class="theme-swatch swatch-frost" aria-hidden="true"></span>
+              <span>Glacial Frost</span>
+              <svg class="theme-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            </button>
+            <button class="theme-opt" type="button" role="menuitem" data-set-theme="emerald">
+              <span class="theme-swatch swatch-emerald" aria-hidden="true"></span>
+              <span>Forest Emerald</span>
               <svg class="theme-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
             </button>
           </div>
@@ -1651,7 +1869,13 @@ button{font:inherit; color:inherit; border:0; background:none; cursor:pointer}
     light: "#FAF6EF",
     dark: "#0D1117",
     sepia: "#F5ECD7",
-    slate: "#0F172A"
+    slate: "#0F172A",
+    pink: "#FDF2F4",
+    gold: "#FAF5E8",
+    royal: "#120B1E",
+    deluxe: "#0A1120",
+    frost: "#F0F6FA",
+    emerald: "#F2F7F4"
   };
 
   function applyTheme(theme) {
